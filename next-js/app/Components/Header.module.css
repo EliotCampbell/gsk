@@ -1,0 +1,42 @@
+.Header {
+    height: 80px;
+    background: antiquewhite;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper{
+    display: flex;
+    max-width: var(--max-width);
+    flex-grow: 1;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    background: blueviolet;
+    border-radius: 5px;
+    padding: 5px 20px;
+    align-items: center;
+    min-height: 100%;
+}
+
+.menu {
+    padding: 5px 20px;
+    display: flex;
+}
+
+.menuItem {
+    background: blueviolet;
+    transition: 300ms;
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+}
+
+.menuItem:hover {
+    background: blue;
+    cursor: pointer;
+}
