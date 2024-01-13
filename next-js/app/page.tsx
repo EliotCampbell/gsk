@@ -14,7 +14,9 @@ interface IApiAdvertisement {
 }
 
 const getAdvertisements = async () =>
-  await fetch("http://localhost:1337/api/advertisements?populate=photos")
+  await fetch(process.env.CMS_API + "advertisements?populate=photos", {
+    cache: "no-cache",
+  })
     .then((res) => res.json())
     .then((data) => data);
 
