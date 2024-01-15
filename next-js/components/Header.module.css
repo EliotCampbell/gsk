@@ -1,15 +1,17 @@
 .Header {
-    height: 80px;
     background: antiquewhite;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .wrapper{
     display: flex;
+    height: 90px;
+    width: 100vw;
     max-width: var(--max-width);
     flex-grow: 1;
-    padding: 10px 20px;
+    padding: 30px 20px 10px;
     align-items: center;
     justify-content: space-between;
 }
@@ -24,7 +26,7 @@
 }
 
 .menu {
-    padding: 5px 20px;
+    padding: 5px 0;
     display: flex;
 }
 
@@ -32,11 +34,17 @@
     background: blueviolet;
     transition: 300ms;
     padding: 10px;
-    margin: 0 10px;
+    margin: 0 0 0 20px;
     border-radius: 5px;
 }
 
 .menuItem:hover {
     background: blue;
     cursor: pointer;
+}
+
+.extraHeader{
+    min-height: 30px;
+    min-width: 100%;
+    background: black;
 }
