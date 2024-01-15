@@ -8,6 +8,7 @@ interface IMenuItem {
 
 interface IHeaderProps {
   menuItems: IMenuItem[];
+  title: string;
 }
 
 const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
@@ -17,11 +18,12 @@ const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
     </div>
   ));
 
-const Header: React.FC<IHeaderProps> = ({ menuItems }) => {
+const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
   return (
     <div className={classes.Header}>
+      <div className={classes.extraHeader}></div>
       <div className={classes.wrapper}>
-        <h1 className={classes.logo}>GSK</h1>
+        <h1 className={classes.logo}>{title}</h1>
         <div className={classes.menu}>{renderMenu(menuItems)}</div>
       </div>
     </div>

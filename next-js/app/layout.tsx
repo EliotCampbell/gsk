@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import React, { ReactNode } from "react";
-import Header from "@/app/Components/Header";
+import Header from "@/components/Header";
+import StoreProvider from "@/lib/StoreProvider";
 
 export const metadata: Metadata = {
-  title: "GSK",
-  description: "GSK official site",
+  title: "ГСК",
+  description: "ГСК official site",
 };
 
 interface IRootLayoutProps {
@@ -16,17 +17,22 @@ const RootLayout: React.FunctionComponent<IRootLayoutProps> = ({
   children,
 }) => {
   const menuItems: { type: string; title: string }[] = [
-    { type: "ads", title: "ads" },
-    { type: "services", title: "services" },
+    { type: "services", title: "Услуги мастеров" },
+    { type: "ads", title: "Объявления собственников" },
+    { type: "news", title: "Новости" },
+    { type: "payment", title: "Оплата" },
+    { type: "contacts", title: "Контакты" },
   ];
 
   return (
-    <html lang="en">
-      <body>
-        <Header menuItems={menuItems} />
-        {children}
-      </body>
-    </html>
+    <StoreProvider count={5}>
+      <html lang="en">
+        <body>
+          <Header menuItems={menuItems} title={"ГСК"} />
+          {children}
+        </body>
+      </html>
+    </StoreProvider>
   );
 };
 
