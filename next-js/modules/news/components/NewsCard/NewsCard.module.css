@@ -1,0 +1,67 @@
+.NewsCard{
+    max-width: var(--max-width);
+    width: 100%;
+    padding: 0 0 20px;
+}
+
+.cardWrapper{
+    padding: 20px;
+    color: #9a270f;
+    display: flex;
+    flex-direction: column;
+    background: #e7e7e7;
+    border-radius: 3px;
+    border: #a47067 1px solid;
+}
+
+.cardWrapper:hover{
+    border-color: transparent;
+    box-shadow: 0 0 15px 0 rgba(164, 112, 103, 0.3);
+    transition: 300ms;
+}
+
+.title{
+    font-size: 20px;
+    padding: 30px 0 10px 10px;
+    font-weight: 700;
+}
+
+.title:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.body{
+    padding: 10px 0 10px 10px;
+    font-size: 16px;
+}
+
+.body p{
+    padding: 10px 0;
+}
+
+.origin {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.originPicture {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background: #a47067;
+}
+
+.author {
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.timestamp{
+    font-size: 14px;
+    color: #a47067;
+    margin-left: auto;
+}

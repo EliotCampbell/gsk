@@ -1,8 +1,13 @@
+@font-face {
+  font-family: "Roboto";
+  src: url('../public/Roboto-regular.ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+
 :root {
   --max-width: 1440px;
-  --font: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font: Roboto, sans-serif ;
   --background: #333333;
   --font-main-color: #FFFFFF
 }
@@ -19,11 +24,20 @@ body {
   max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
+
 }
 
 body {
   color: var(--font-main-color);
-  background: var(--background)
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../public/garage-door-background.jpg');
+  background-position: top;
+  background-position-y: -30px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 a {
