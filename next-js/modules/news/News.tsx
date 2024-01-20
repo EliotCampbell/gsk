@@ -17,13 +17,13 @@ const News: React.FC = async () => {
 
   return (
     <>
-      {publications.map((el) => (
+      {publications.map((el: ISingleNews) => (
         <NewsCard
           news={{
             title: el.title,
             body: el.body,
-            date: new Date(el.created_at),
-            author: el.user_id
+            created_at: new Date(el.created_at),
+            user_id: el.user_id
           }}
           key={el.id}
         />

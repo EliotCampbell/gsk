@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import classes from './Header.module.css'
 import Link from 'next/link'
+import { FiUser } from 'react-icons/fi'
 
 interface IMenuItem {
   type: string
@@ -22,6 +23,15 @@ const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
     </Link>
   ))
 
+const user: IMenuItem[] = [
+  {
+    title: 'ПОЛЬЗОВАТЕЛЬ',
+    ico: <FiUser className={classes.ico} />,
+    path: '/auth',
+    type: 'user'
+  }
+]
+
 const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
   return (
     <div className={classes.Header}>
@@ -29,7 +39,10 @@ const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
         <Link href={'/'} className={classes.logo}>
           {title}
         </Link>
-        <div className={classes.menu}>{renderMenu(menuItems)}</div>
+        <div className={classes.menu}>
+          {renderMenu(menuItems)}
+          {renderMenu(user)}
+        </div>
       </div>
     </div>
   )

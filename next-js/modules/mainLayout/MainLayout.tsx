@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react'
-import Header from '@/MainLayout/components/Header/Header'
-import Footer from '@/MainLayout/components/Footer/Footer'
-import LayoutBody from '@/MainLayout/components/LayoutBody/LayoutBody'
-import classes from '@/MainLayout/components/Header/Header.module.css'
+import Header from '@/modules/mainLayout/components/Header/Header'
+import Footer from '@/modules/mainLayout/components/Footer/Footer'
+import LayoutBody from '@/modules/mainLayout/components/LayoutBody/LayoutBody'
+import classes from '@/modules/mainLayout/components/Header/Header.module.css'
+
+//todo:''
 import {
   FiAlertTriangle,
   FiAlignCenter,
