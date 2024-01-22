@@ -1,7 +1,7 @@
 .Header {
     height: 100px;
     margin: 30px 0;
-    background: #eeeff1;
+    background: var(--background);;
     display: flex;
     border: rgba(51, 51, 51, 0.3) 1px solid;
     justify-content: center;
@@ -24,7 +24,7 @@
     font-size: 42px;
     font-weight: 700;
     display: flex;
-    color: #9a270f;
+    color: var(--font-secondary-color);
     border-radius: 5px;
     align-items: center;
     min-height: 100%;
@@ -39,7 +39,29 @@
 .menuItem {
     width: 150px;
     height: 100px;
-    color: #9a270f;
+    color: var(--font-secondary-color);
+    transition: 300ms;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 5px solid transparent;
+}
+
+.menuItem:hover {
+    background: var(--background-hover-color);
+    color: var(--font-secondary-color_hover);
+    cursor: pointer;
+    border-bottom: 5px solid var(--font-secondary-color_hover);
+    box-sizing: border-box;
+}
+
+.userItem{
+    background: #a47067;
+    width: 150px;
+    height: 100px;
+    color: var(--font-secondary-color);
     transition: 300ms;
     padding: 0 20px;
     display: flex;
@@ -64,13 +86,5 @@
     font-weight: bold;
     letter-spacing: 0.09em;
     padding-bottom: 20px;
-}
-
-.menuItem:hover {
-    background: rgba(194, 188, 188, 0.29);
-    color: #e15b3d;
-    cursor: pointer;
-    border-bottom: 5px solid #9a270f;
-    box-sizing: border-box;
 }
 

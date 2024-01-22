@@ -2,6 +2,18 @@
     display: flex;
     padding: 40px;
     flex-direction: column;
-    background: #9a270f;
+    background: var(--background);
     border-radius: 3px;
+    border: 1px solid var(--border-color);
+    justify-self: center;
+}
+
+.input {
+    width: 300px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: var(--background);
+    border: solid 1px var(--border-color);
+    border-radius: 2px;
+    font-size: 20px;
 }

@@ -23,14 +23,12 @@ const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
     </Link>
   ))
 
-const user: IMenuItem[] = [
-  {
-    title: 'ПОЛЬЗОВАТЕЛЬ',
-    ico: <FiUser className={classes.ico} />,
-    path: '/auth',
-    type: 'user'
-  }
-]
+const user: IMenuItem = {
+  title: 'ПОЛЬЗОВАТЕЛЬ',
+  ico: <FiUser className={classes.ico} />,
+  path: '/auth',
+  type: 'user'
+}
 
 const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
   return (
@@ -41,7 +39,10 @@ const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
         </Link>
         <div className={classes.menu}>
           {renderMenu(menuItems)}
-          {renderMenu(user)}
+          <Link href={user.path} className={classes.userItem} key={user.path}>
+            <div>{user.ico}</div>
+            <p className={classes.menuItemText}>{user.title}</p>
+          </Link>
         </div>
       </div>
     </div>
