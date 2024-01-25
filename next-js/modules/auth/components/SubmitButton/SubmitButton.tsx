@@ -10,7 +10,7 @@ const SubmitButton: React.FC<{ children: string }> = ({ children }) => {
 
   return (
     <button className={classes.button} type="submit" aria-disabled={pending}>
-      {pending ? <FiRotateCw /> : children}
+      {pending ? <FiRotateCw className={classes.spinner} /> : children}
     </button>
   )
 }

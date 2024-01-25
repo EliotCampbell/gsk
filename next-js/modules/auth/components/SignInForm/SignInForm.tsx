@@ -19,6 +19,7 @@ const SignInForm: React.FC = () => {
   //todo: try to implement error handling from server actions
   return (
     <form action={action} className={classes.form}>
+      <p className={classes.title}>ГСК</p>
       <input
         name={'email'}
         className={classes.input}
@@ -30,7 +31,7 @@ const SignInForm: React.FC = () => {
         className={classes.input}
         placeholder={'Password...'}
       />
-      <SubmitButton>{'Войти'}</SubmitButton>
+      <SubmitButton>{'ВОЙТИ'}</SubmitButton>
     </form>
   )
 }

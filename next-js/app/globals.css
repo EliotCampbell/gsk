@@ -9,11 +9,12 @@
   --max-width: 1440px;
   --font: Roboto, sans-serif ;
   --background: #eeeff1;
-  --background-hover-color: #E0E0E0FF;
-  --font-main-color: #FFFFFF;
+  --background-grey-color: #E0E0E0FF;
+  --background-grey-color-hover: #d3d3d3;
+  --font-color: #FFFFFF;
   --font-secondary-color: #9a270f;
   --font-secondary-color_hover: #c5492c;
-  --border-color: rgba(51, 51, 51, 0.3)
+  --border-color: rgba(141, 141, 141, 0.45)
 }
 
 * {
@@ -32,16 +33,16 @@ body {
 }
 
 body {
-  color: var(--font-main-color);
-  background: var(--background);
+  color: var(--font-color);
+  background: var(--background-grey-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('../public/garage-door-background.jpg');
+  /*background-image: url('../public/garage-door-background.jpg');
   background-position: top;
   background-position-y: -30px;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;*/
 }
 
 a {

@@ -18,5 +18,5 @@ export const serverAction = async (_: any, formData: FormData) => {
   } catch (error) {
     return { error: (error as Error).message }
   }
-  redirect('/')
+  redirect('/user')
 }

@@ -1,14 +1,34 @@
 .button{
-    background: var(--background);
-    font-size: 24px;
-    border: 1px solid var(--border-color);
+    background: var(--background-grey-color);
+    font-size: 16px;
+    color: var(--font-secondary-color);
     border-radius: 3px;
     padding: 5px;
-    width: 150px;
+    width: 100%;
+    font-weight: 700;
     align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    transition: 300ms;
+    letter-spacing: 0.09em;
 }
 
 .button:hover{
-    background:  var(--background-hover-color);
+    background: var(--background-grey-color-hover);
     cursor: pointer;
+}
+
+.spinner {
+    animation: rotate 700ms linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
