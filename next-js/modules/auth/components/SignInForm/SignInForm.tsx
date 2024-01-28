@@ -1,24 +1,25 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import classes from './SignInForm.module.css'
+import React from 'react'
 import { useFormState } from 'react-dom'
-import { serverAction } from '@/modules/auth/actions'
+import classes from './SignInForm.module.css'
 import SubmitButton from '@/modules/auth/components/SubmitButton/SubmitButton'
 import { useAppStore } from '@/lib/redux/hooks'
-import { setError } from '@/lib/redux/features/error/errorSlice'
+import { authWithCredentials } from '@/lib/redux/features/auth/authSlice'
 
 const SignInForm: React.FC = () => {
-  const [state, action] = useFormState(serverAction, { error: '' })
-
   const store = useAppStore()
-  useEffect(() => {
-    state.error && store.dispatch(setError({ message: state.error }))
-    console.log(state.error)
-  }, [state])
+
+  const handleSignIn = (state: object, formData: FormData) => {
+    store.dispatch(authWithCredentials(formData))
+    return state
+  }
+
+  const [_, formAction] = useFormState(handleSignIn, {})
+
   //todo: try to implement error handling from server actions
   return (
-    <form action={action} className={classes.form}>
+    <form action={formAction} className={classes.form}>
       <p className={classes.title}>ГСК</p>
       <input
         name={'email'}

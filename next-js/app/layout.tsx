@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import React, { ReactNode } from 'react'
 import MainLayout from '@/modules/mainLayout/MainLayout'
-import StoreProvider from '@/lib/redux/StoreProvider'
-import Error from '@/modules/error/Error'
+import Notification from '@/modules/notification/Notification'
+import ServicesProvider from '@/app/ServicesProvider'
 
 export const metadata: Metadata = {
   title: 'ГСК',
@@ -14,11 +14,11 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <StoreProvider>
-          <Error>
+        <ServicesProvider>
+          <Notification>
             <MainLayout>{children}</MainLayout>
-          </Error>
-        </StoreProvider>
+          </Notification>
+        </ServicesProvider>
       </body>
     </html>
   )
