@@ -56,10 +56,8 @@
     box-sizing: border-box;
 }
 
-.userItem{
-    background: #a47067;
-    width: 120px;
-    min-height: 100%;
+.smallItem{
+    width: 40px;
     color: var(--font-secondary-color);
     transition: 300ms;
     padding: 0 10px;
@@ -67,7 +65,8 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid transparent;
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
 }
 
 .ico {

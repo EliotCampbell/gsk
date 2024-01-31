@@ -2,12 +2,13 @@
 
 import React, { ReactNode, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import { useAppSelector, useAppStore } from '@/lib/redux/hooks'
+import { useAppDispatch, useAppSelector, useAppStore } from '@/lib/redux/hooks'
 import { clearError } from '@/lib/redux/features/notification/notificationSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { INotification } from '@/types'
+import { checkLocalSession } from '@/lib/redux/features/auth/authSlice'
 
-const Notification: React.FC<{ children: ReactNode }> = ({ children }) => {
+const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const select = useAppSelector((state) => state.notification)
 
   const store = useAppStore()
@@ -21,6 +22,12 @@ const Notification: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
     store.dispatch(clearError())
   }
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(checkLocalSession())
+  }, [])
 
   useEffect(() => {
     select.message && createToast(select)

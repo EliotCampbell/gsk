@@ -10,6 +10,7 @@ import {
   FiPhoneCall,
   FiTool
 } from 'react-icons/fi'
+//todo: css import
 
 const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const menuItems: {
@@ -49,6 +50,7 @@ const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
       ico: <FiPhoneCall className={classes.ico} />
     }
   ]
+
   return (
     <>
       <Header menuItems={menuItems} title={'ГСК'} />

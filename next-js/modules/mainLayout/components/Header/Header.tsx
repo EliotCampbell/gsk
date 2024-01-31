@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react'
 import classes from './Header.module.css'
 import Link from 'next/link'
-import { FiUser } from 'react-icons/fi'
+import SmallMenuItems from '@/modules/mainLayout/components/SmallMenuItems/SmallMenuItems'
 
 interface IMenuItem {
   type: string
   title: string
   path: string
-  ico?: ReactNode
+  ico: ReactNode
 }
 
 interface IHeaderProps {
@@ -23,13 +23,6 @@ const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
     </Link>
   ))
 
-const user: IMenuItem = {
-  title: 'ПОЛЬЗОВАТЕЛЬ',
-  ico: <FiUser className={classes.ico} />,
-  path: '/auth',
-  type: 'user'
-}
-
 const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
   return (
     <div className={classes.Header}>
@@ -39,10 +32,7 @@ const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
         </Link>
         <div className={classes.menu}>
           {renderMenu(menuItems)}
-          <Link href={user.path} className={classes.userItem} key={user.path}>
-            <div>{user.ico}</div>
-            <p className={classes.menuItemText}>{user.title}</p>
-          </Link>
+          <SmallMenuItems />
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import NewsCard from '@/modules/news/components/NewsCard/NewsCard'
 
 const News: React.FC = async () => {
   const publications = await fetch(
@@ -17,7 +16,7 @@ const News: React.FC = async () => {
 
   return (
     <>
-      {publications.map((el: ISingleNews) => (
+      {/*      {publications.map((el: ISingleNews) => (
         <NewsCard
           news={{
             title: el.title,
@@ -27,7 +26,7 @@ const News: React.FC = async () => {
           }}
           key={el.id}
         />
-      ))}
+      ))}*/}
     </>
   )
 }
