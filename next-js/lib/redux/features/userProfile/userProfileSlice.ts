@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { serverAction } from '@/lib/redux/features/userProfile/serverActions'
+
+import { serverGetUser } from '@/lib/supabase/actions'
 
 const initialState = { user: {} }
 
 export const getUser = createAsyncThunk('userProfile/getUser', async () => {
-  const response = await serverAction()
+  const response = await serverGetUser()
   console.log(response)
 })
 

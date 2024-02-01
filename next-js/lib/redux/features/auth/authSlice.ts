@@ -5,9 +5,9 @@ import {
 } from '@/lib/redux/features/notification/notificationSlice'
 import {
   serverCheckLocalSession,
-  serverServerAction,
+  serverSignInWithPassword,
   serverSignOut
-} from '@/lib/redux/features/auth/serverActions'
+} from '@/lib/supabase/actions'
 
 const initialState = { exists: false, isLoading: true }
 
@@ -15,7 +15,7 @@ export const authWithCredentials = createAsyncThunk(
   'auth/authWithCredentials',
   async (formData: FormData, thunkAPI) => {
     try {
-      const response = await serverServerAction(formData)
+      const response = await serverSignInWithPassword(formData)
       if ('error' in response.data) {
         throw new Error(response.data.error.message)
       }
