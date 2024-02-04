@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import classes from './Header.module.css'
 import Link from 'next/link'
-import SmallMenuItems from '@/modules/mainLayout/components/SmallMenuItems/SmallMenuItems'
+import UserSection from '@/modules/mainLayout/components/UserSection/UserSection'
 
 interface IMenuItem {
   type: string
@@ -32,7 +32,7 @@ const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
         </Link>
         <div className={classes.menu}>
           {renderMenu(menuItems)}
-          <SmallMenuItems />
+          <UserSection />
         </div>
       </div>
     </div>
