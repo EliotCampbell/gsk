@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { serverGetUser } from '@/lib/supabase/actions'
+import { serverGetUserProfileData } from '@/lib/supabase/actions'
 
 const initialState = { user: {} }
 
-export const getUser = createAsyncThunk('userProfile/getUser', async () => {
-  const response = await serverGetUser()
-  console.log(response)
-})
+export const getUserProfileData = createAsyncThunk(
+  'userProfile/getUser',
+  async () => {
+    const response = await serverGetUserProfileData()
+  }
+)
 
 export const userProfileSlice = createSlice({
   name: 'userProfile',

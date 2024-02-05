@@ -1,10 +1,11 @@
 'use server'
 import { type CookieOptions, createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { Database } from '@/types/supabase'
 
 export default async function createSupabaseServerClient() {
   const cookieStore = cookies()
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -77,10 +78,18 @@ export const serverSignOut = async () => {
   }
 }
 
-export const serverGetUser = async () => {
+export const serverGetUserProfileData = async () => {
   try {
     const supabase = await createSupabaseServerClient()
     const { data } = await supabase.auth.getUser()
+    if (data.user?.id) {
+      const info = await supabase
+        .from('user_profiles')
+        .select()
+        .eq('id', data.user.id)
+      console.log(info)
+    }
+
     return data
   } catch (error) {
     return { data: { error: { message: (error as Error).message } } }
