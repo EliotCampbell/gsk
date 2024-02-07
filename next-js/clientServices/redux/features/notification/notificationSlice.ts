@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { INotification } from '@/types'
+import { INotification } from '@/types/types'
 
 // Define a type for the slice state
 

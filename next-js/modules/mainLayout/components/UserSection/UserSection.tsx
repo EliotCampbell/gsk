@@ -4,8 +4,8 @@ import Link from 'next/link'
 import classes from './UserSection.module.css'
 import { FiUser } from 'react-icons/fi'
 import { BsFillDoorOpenFill } from 'react-icons/bs'
-import { signOut } from '@/lib/redux/features/auth/authSlice'
-import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'
+import { signOut } from '@/clientServices/redux/features/auth/authSlice'
+import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
 
 const UserSection: React.FC = () => {
   const dispatch = useAppDispatch()

@@ -60,6 +60,9 @@ const middleware = async (request: NextRequest) => {
   if (!data.user && protectedRoutes.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/auth', request.url))
   }
+  if (data.user && request.nextUrl.pathname.startsWith('/auth')) {
+    return NextResponse.redirect(new URL('/user', request.url))
+  }
   return response
 }
 

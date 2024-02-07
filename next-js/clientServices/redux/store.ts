@@ -1,15 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import notificationReducer from './features/notification/notificationSlice'
-import authSlice from '@/lib/redux/features/auth/authSlice'
-import userProfileReducer from '@/lib/redux/features/userProfile/userProfileSlice'
-
+import authSlice from '@/clientServices/redux/features/auth/authSlice'
+import userProfileReducer from '@/clientServices/redux/features/userProfile/userProfileSlice'
+import * as actions from '@/serverServices/supabase/exports'
 export const makeStore = () => {
   return configureStore({
     reducer: {
       notification: notificationReducer,
       auth: authSlice,
       userProfile: userProfileReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ thunk: { extraArgument: actions } })
   })
 }
 

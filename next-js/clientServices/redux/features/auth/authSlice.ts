@@ -2,12 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   setError,
   setSuccess
-} from '@/lib/redux/features/notification/notificationSlice'
-import {
-  serverCheckLocalSession,
-  serverSignInWithPassword,
-  serverSignOut
-} from '@/lib/supabase/actions'
+} from '@/clientServices/redux/features/notification/notificationSlice'
+import { authSA } from '@/serverServices/supabase/exports'
 
 const initialState = { exists: false, isLoading: true }
 
@@ -15,7 +11,7 @@ export const authWithCredentials = createAsyncThunk(
   'auth/authWithCredentials',
   async (formData: FormData, thunkAPI) => {
     try {
-      const response = await serverSignInWithPassword(formData)
+      const response = await authSA.serverSignInWithPassword(formData)
       if ('error' in response.data) {
         throw new Error(response.data.error.message)
       }
@@ -35,7 +31,7 @@ export const checkLocalSession = createAsyncThunk(
   'auth/checkLocalSession',
   async (_, thunkAPI) => {
     try {
-      const response = await serverCheckLocalSession()
+      const response = await authSA.serverCheckLocalSession()
       if ('error' in response && response.error) {
         throw new Error(response.error.message)
       }
@@ -57,7 +53,7 @@ export const checkLocalSession = createAsyncThunk(
 
 export const signOut = createAsyncThunk('auth/signOut', async (_, thunkAPI) => {
   try {
-    const response = await serverSignOut()
+    const response = await authSA.serverSignOut()
     if (response) {
       throw new Error(response.data.error.message)
     }
