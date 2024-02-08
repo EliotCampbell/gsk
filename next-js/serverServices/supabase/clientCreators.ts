@@ -2,7 +2,7 @@ import { type CookieOptions, createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { Database } from '@/types/supabase'
 
-const createSupabaseSAClient = () => {
+export const createSupabaseSAClient = () => {
   const cookieStore = cookies()
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -22,5 +22,3 @@ const createSupabaseSAClient = () => {
     }
   )
 }
-
-export default createSupabaseSAClient

@@ -1,7 +1,7 @@
 'use server'
-import supabase from '@/serverServices/supabase/clientCreators'
+import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
 
-export const serverSignInWithPassword = async (formData: FormData) => {
+export const SignInWithPassword = async (formData: FormData) => {
   try {
     const response = await supabase().auth.signInWithPassword({
       email: formData.get('email') as string,

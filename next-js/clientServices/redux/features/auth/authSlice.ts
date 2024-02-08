@@ -3,29 +3,31 @@ import {
   setError,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
+import * as actions from '@/serverServices/supabase/exports'
 import { authSA } from '@/serverServices/supabase/exports'
 
 const initialState = { exists: false, isLoading: true }
 
-export const authWithCredentials = createAsyncThunk(
-  'auth/authWithCredentials',
-  async (formData: FormData, thunkAPI) => {
-    try {
-      const response = await authSA.serverSignInWithPassword(formData)
-      if ('error' in response.data) {
-        throw new Error(response.data.error.message)
-      }
-      if (response.data) {
-        thunkAPI.dispatch(setSuccess('Logged in!'))
-        return response.data
-      }
-      throw new Error('Unexpected server response')
-    } catch (error) {
-      thunkAPI.dispatch(setError((error as Error).message))
-      return thunkAPI.rejectWithValue((error as Error).message)
+export const authWithCredentials = createAsyncThunk<
+  {},
+  FormData,
+  { extra: typeof actions }
+>('auth/authWithCredentials', async (formData, thunkAPI) => {
+  try {
+    const response = await thunkAPI.extra.authSA.SignInWithPassword(formData)
+    if ('error' in response.data) {
+      throw new Error(response.data.error.message)
     }
+    if (response.data) {
+      thunkAPI.dispatch(setSuccess('Logged in!'))
+      return response.data
+    }
+    throw new Error('Unexpected server response')
+  } catch (error) {
+    thunkAPI.dispatch(setError((error as Error).message))
+    return thunkAPI.rejectWithValue((error as Error).message)
   }
-)
+})
 
 export const checkLocalSession = createAsyncThunk(
   'auth/checkLocalSession',
@@ -69,11 +71,7 @@ export const signOut = createAsyncThunk('auth/signOut', async (_, thunkAPI) => {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: () => {
-      return initialState
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
       authWithCredentials.pending ||
@@ -106,6 +104,6 @@ export const authSlice = createSlice({
   }
 })
 
-export const { logout } = authSlice.actions
+export const {} = authSlice.actions
 
 export default authSlice.reducer
