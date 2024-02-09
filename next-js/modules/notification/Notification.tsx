@@ -43,7 +43,13 @@ const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
   }, [select])
   return (
     <>
-      <ToastContainer position={'top-right'} autoClose={5000} />
+      <ToastContainer
+        position={'bottom-right'}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        hideProgressBar={true}
+        autoClose={5000}
+      />
       {children}
     </>
   )
