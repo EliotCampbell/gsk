@@ -11,7 +11,9 @@ export const makeStore = () => {
       userProfile: userProfileReducer
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ thunk: { extraArgument: { ...actions } } })
+      getDefaultMiddleware({
+        thunk: { extraArgument: { ...actions } }
+      })
   })
 }
 

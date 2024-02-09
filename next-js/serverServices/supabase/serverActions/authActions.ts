@@ -3,20 +3,20 @@ import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/cl
 
 export const SignInWithPassword = async (formData: FormData) => {
   try {
-    const response = await supabase().auth.signInWithPassword({
+    const { error, data } = await supabase().auth.signInWithPassword({
       email: formData.get('email') as string,
       password: formData.get('password') as string
     })
-    if (response.error) {
-      throw response.error
+    if (error) {
+      throw error
     }
-    if (response.data) {
-      return response
+    if (data) {
+      return data
     } else {
       throw new Error('Unexpected supabase Error')
     }
   } catch (error) {
-    return { data: { error: { message: (error as Error).message } } }
+    return { error: { message: (error as Error).message } }
   }
 }
 
