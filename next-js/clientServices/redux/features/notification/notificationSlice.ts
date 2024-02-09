@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { INotification } from '@/types/types'
 
-// Define a type for the slice state
-
-// Define the initial state using that type
 const initialState: INotification = {
   message: '',
   type: ''
@@ -11,7 +8,6 @@ const initialState: INotification = {
 
 export const notificationSlice = createSlice({
   name: 'notification',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setError: (_, action) => {
