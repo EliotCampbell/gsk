@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   setError,
+  setInto,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
 import { authSA } from '@/serverServices/supabase/exports'
 import { Session, User, WeakPassword } from '@supabase/gotrue-js'
 
-type TInitialState = { exists: boolean; isLoading: boolean }
+type TAuthState = { exists: boolean; isLoading: boolean }
 
-const initialState: TInitialState = { exists: false, isLoading: true }
+const initialState: TAuthState = { exists: false, isLoading: true }
 
 type TThunkApi = {
   extra: {
@@ -62,7 +63,7 @@ export const checkLocalSession = createAsyncThunk<
       return data
     }
     if ('session' in data && !data.session) {
-      thunkAPI.dispatch(setError('Session not found'))
+      thunkAPI.dispatch(setInto('Session not found'))
       return data
     }
     throw new Error('Unexpected server response')

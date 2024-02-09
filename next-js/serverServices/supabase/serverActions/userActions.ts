@@ -1,5 +1,5 @@
 'use server'
-import supabase from '@/serverServices/supabase/clientCreators'
+import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
 
 export const serverGetUserProfileData = async () => {
   try {
@@ -11,7 +11,6 @@ export const serverGetUserProfileData = async () => {
         .eq('id', data.user.id)
       console.log(info)
     }
-
     return data
   } catch (error) {
     return { data: { error: { message: (error as Error).message } } }

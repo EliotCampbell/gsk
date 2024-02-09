@@ -9,7 +9,7 @@ import {
 } from '@/clientServices/redux/hooks'
 import { clearError } from '@/clientServices/redux/features/notification/notificationSlice'
 import 'react-toastify/dist/ReactToastify.css'
-import { INotification } from '@/types/types'
+import { TNotification } from '@/types/types'
 import { checkLocalSession } from '@/clientServices/redux/features/auth/authSlice'
 
 const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
@@ -17,12 +17,17 @@ const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
 
   const store = useAppStore()
 
-  const createToast = (toastParams: INotification) => {
+  const createToast = (toastParams: TNotification) => {
     if (toastParams.type === 'error') {
       toast.error(select.message)
     }
-    if (select.type === 'success') {
+    if (toastParams.type === 'success') {
       toast.success(select.message)
+    }
+    if (toastParams.type === 'info') {
+      toast.info(select.message)
+    } else {
+      toast.error('Notification type is unknown')
     }
     store.dispatch(clearError())
   }
