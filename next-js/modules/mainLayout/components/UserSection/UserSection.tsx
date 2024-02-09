@@ -30,7 +30,11 @@ const UserSection: React.FC = () => {
           </button>
         </>
       ) : (
-        <button>ВОЙТИ</button>
+        <Link href={'/auth'}>
+          <button className={classes.loginButton} type={'button'}>
+            ВОЙТИ
+          </button>
+        </Link>
       )}
     </div>
   )
