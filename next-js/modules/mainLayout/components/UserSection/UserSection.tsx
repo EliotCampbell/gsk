@@ -7,6 +7,7 @@ import { BsFillDoorOpenFill } from 'react-icons/bs'
 import { signOut } from '@/clientServices/redux/features/auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
 import { shallowEqual } from 'react-redux'
+import Spinner from '@/modules/UI/Spinner/Spinner'
 
 const UserSection: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -19,7 +20,7 @@ const UserSection: React.FC = () => {
   )
 
   return isLoading ? (
-    <></>
+    <Spinner />
   ) : (
     <div className={classes.section}>
       {exists ? (
