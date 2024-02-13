@@ -1,8 +1,8 @@
 import React from 'react'
-import News from '@/modules/news/News'
+import Publications from '@/modules/news/Publications'
 
 const Page: React.FC = () => {
-  return <News />
+  return <Publications />
 }
 
 export default Page

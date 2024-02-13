@@ -11,7 +11,6 @@
     flex-direction: column;
     background: #e7e7e7;
     border-radius: 3px;
-    border: #a47067 1px solid;
 }
 
 .cardWrapper:hover{
