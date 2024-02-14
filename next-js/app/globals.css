@@ -9,12 +9,14 @@
   --max-width: 1440px;
   --font: Roboto, sans-serif ;
   --background: #eeeff1;
-  --background-grey-color: #E0E0E0FF;
+  --background-grey-color: #e7e7e7;
   --background-grey-color-hover: #d3d3d3;
   --font-color: #FFFFFF;
+  --grey-text-color: #adadad;
   --font-secondary-color: #9a270f;
   --font-secondary-color_hover: #c5492c;
-  --border-color: rgba(141, 141, 141, 0.45)
+  --border-color: rgba(141, 141, 141, 0.3);
+  --box-shadow-color: rgba(164, 112, 103, 0.3)
 }
 
 * {
