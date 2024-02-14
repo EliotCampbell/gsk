@@ -2,16 +2,21 @@ import { createSupabaseSClient as supabase } from '@/serverServices/supabase/cli
 
 export const getPublications = async () => {
   try {
-    const { error, data } = await supabase().from('publications').select()
+    const { data, error } = await supabase()
+      .from('publications')
+      .select(
+        `id, created_at, title, body, user_id, publication_images, users_profiles(name, surname, username, profile_image)`
+      )
+      .order('created_at', { ascending: true })
+      .eq('is_hidden', 'false')
     if (error) {
       throw error
     }
-    if (data) {
-      return data
-    } else {
-      throw new Error('Unexpected supabase Error')
-    }
+    return data
   } catch (error) {
-    console.log((error as Error).message)
+    console.log(
+      `Supabase API error in getPublications: ${(error as Error).message}`
+    )
+    return []
   }
 }

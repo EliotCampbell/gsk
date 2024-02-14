@@ -1,0 +1,5 @@
+.title{
+    align-self: flex-start;
+    margin-bottom: 20px;
+    color: var(--font-secondary-color);
+}
