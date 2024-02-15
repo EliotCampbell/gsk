@@ -7,7 +7,7 @@ const Spinner: React.FC<{ rotate?: boolean }> = ({ rotate = true }) => {
     <FiRotateCw
       className={
         rotate
-          ? `${classes.spinner}, ${classes.spinner_pending}`
+          ? `${classes.spinner} ${classes.spinner_pending}`
           : classes.spinner
       }
     />

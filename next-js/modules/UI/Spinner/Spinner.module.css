@@ -1,4 +1,8 @@
-.spinner {}
+.spinner {
+    height: 21px;
+    width: 21px;
+    color: var(--font-secondary-color);
+}
 
 .spinner_pending {
     animation: rotate 700ms linear infinite;
