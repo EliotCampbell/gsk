@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.notFound {
+  font-size: 5em;
+  align-self: flex-start;
+  color: var(--grey-text-color);
+}
+
+.logo {
+  font-weight: 700;
+  margin-top: 80px;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  color: var(--font-secondary-color);
+}
+
+.info {
+  align-self: center;
+  margin-top: 20px;
+  color: var(--font-secondary-color);
+  font-size: 1em;
+}
+.action {
+  background: transparent;
+  font-size: 1em;
+  color: var(--font-secondary-color);
+  font-weight: 700;
+}
