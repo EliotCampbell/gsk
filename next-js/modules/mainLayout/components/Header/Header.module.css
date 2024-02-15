@@ -56,7 +56,7 @@
     box-sizing: border-box;
 }
 
-.ico {
+.ico svg{
     min-height: 21px;
     min-width: 21px;
     margin: 10px 0 5px;

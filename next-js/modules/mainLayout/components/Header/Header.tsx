@@ -3,27 +3,27 @@ import classes from './Header.module.css'
 import Link from 'next/link'
 import UserSection from '@/modules/mainLayout/components/UserSection/UserSection'
 
-interface IMenuItem {
+type TMenuItem = {
   type: string
   title: string
   path: string
   ico: ReactNode
 }
 
-interface IHeaderProps {
-  menuItems: IMenuItem[]
+type THeaderProps = {
+  menuItems: TMenuItem[]
   title: string
 }
 
-const renderMenu = (menuItems: IMenuItem[]): ReactNode =>
+const renderMenu = (menuItems: TMenuItem[]): ReactNode =>
   menuItems.map((item) => (
     <Link href={item.path} className={classes.menuItem} key={item.path}>
-      <div>{item.ico}</div>
+      <div className={classes.ico}>{item.ico}</div>
       <p className={classes.menuItemText}>{item.title}</p>
     </Link>
   ))
 
-const Header: React.FC<IHeaderProps> = ({ menuItems, title }) => {
+const Header: React.FC<THeaderProps> = ({ menuItems, title }) => {
   return (
     <div className={classes.Header}>
       <div className={classes.wrapper}>

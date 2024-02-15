@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react'
 import Header from '@/modules/mainLayout/components/Header/Header'
 import Footer from '@/modules/mainLayout/components/Footer/Footer'
 import LayoutBody from '@/modules/mainLayout/components/LayoutBody/LayoutBody'
-import classes from '@/modules/mainLayout/components/Header/Header.module.css'
 import {
   FiAlertTriangle,
   FiAlignCenter,
@@ -10,44 +9,45 @@ import {
   FiPhoneCall,
   FiTool
 } from 'react-icons/fi'
-//todo: css import
 
 const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const menuItems: {
+  type TMenuItem = {
     type: string
     title: string
     path: string
     ico: ReactNode
-  }[] = [
+  }
+
+  const menuItems: TMenuItem[] = [
     {
       type: 'news',
       title: 'НОВОСТИ',
       path: '/news',
-      ico: <FiAlignCenter className={classes.ico} />
+      ico: <FiAlignCenter />
     },
     {
       type: 'services',
       title: 'МАСТЕРА',
       path: '/services',
-      ico: <FiTool className={classes.ico} />
+      ico: <FiTool />
     },
     {
       type: 'ads',
       title: 'ОБЪЯВЛЕНИЯ',
       path: '/ads',
-      ico: <FiAlertTriangle className={classes.ico} />
+      ico: <FiAlertTriangle />
     },
     {
       type: 'payment',
       title: 'ОПЛАТА',
       path: '/payment',
-      ico: <FiCheckCircle className={classes.ico} />
+      ico: <FiCheckCircle />
     },
     {
       type: 'contacts',
       title: 'КОНТАКТЫ',
       path: '/contacts',
-      ico: <FiPhoneCall className={classes.ico} />
+      ico: <FiPhoneCall />
     }
   ]
 
