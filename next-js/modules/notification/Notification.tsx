@@ -7,7 +7,7 @@ import {
   useAppSelector,
   useAppStore
 } from '@/clientServices/redux/hooks'
-import { clearError } from '@/clientServices/redux/features/notification/notificationSlice'
+import { clear } from '@/clientServices/redux/features/notification/notificationSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { TNotification } from '@/types/types'
 import { checkLocalSession } from '@/clientServices/redux/features/auth/authSlice'
@@ -18,18 +18,22 @@ const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const store = useAppStore()
 
   const createToast = (toastParams: TNotification) => {
-    if (toastParams.type === 'error') {
-      toast.error(select.message)
+    switch (toastParams.type) {
+      case 'error':
+        toast.error(select.message)
+        break
+      case 'success':
+        toast.success(select.message)
+        break
+      case 'info':
+        toast.info(select.message)
+        break
+      case '':
+        store.dispatch(clear())
+        break
+      default:
+        toast.error('Notification type is unknown')
     }
-    if (toastParams.type === 'success') {
-      toast.success(select.message)
-    }
-    if (toastParams.type === 'info') {
-      toast.info(select.message)
-    } else {
-      toast.error('Notification type is unknown')
-    }
-    store.dispatch(clearError())
   }
 
   const dispatch = useAppDispatch()
@@ -37,6 +41,7 @@ const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
   useEffect(() => {
     dispatch(checkLocalSession())
   }, [])
+  //todo: remove session check
 
   useEffect(() => {
     select.message && createToast(select)
