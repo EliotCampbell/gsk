@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { userSA } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { User } from '@supabase/gotrue-js'
-import { Database, Tables } from '@/types/supabase'
+import { PublicUserType } from '@/serverServices/supabase/serverActions/userActions'
 
 type TProfileState = {
   userPrivateData: {}
@@ -10,7 +10,10 @@ type TProfileState = {
   isLoading: boolean
 }
 
-type TThunkApi = { extra: { userSA: typeof userSA } } //todo: export this
+type TThunkApi = {
+  extra: { userSA: typeof userSA }
+  rejectValue: string
+} //todo: export this
 
 const initialState: TProfileState = {
   isLoading: true,
@@ -18,17 +21,17 @@ const initialState: TProfileState = {
   userPublicData: {}
 }
 
-type TUserProfileData = {
+interface IUserProfileData {
   user: User
 }
 
 export const getPrivateUser = createAsyncThunk<
-  TUserProfileData,
+  IUserProfileData,
   void,
   TThunkApi
->('userProfile/getUser', async (_, thunkAPI) => {
+>('userProfile/getPrivateUser', async (_, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.userSA.serverGetPrivateUser()
+    const data = await thunkAPI.extra.userSA.getPrivateUser()
     if ('error' in data && data.error) {
       throw new Error(data.error.message)
     }
@@ -43,42 +46,39 @@ export const getPrivateUser = createAsyncThunk<
   }
 })
 
-export const getPublicUser = createAsyncThunk<{}, string, TThunkApi>( //todo: add type
-  'userProfile/getUser',
-  async (userId, thunkAPI) => {
-    try {
-      const data = await thunkAPI.extra.userSA.serverGetPublicUser(userId)
-      if ('error' in data && data.error) {
-        throw new Error(data.error.message)
-      }
-      if ('data' in data && data) {
-        return data
-      } else {
-        throw new Error('Unexpected server response')
-      }
-    } catch (error) {
-      thunkAPI.dispatch(setError((error as Error).message))
-      return thunkAPI.rejectWithValue((error as Error).message)
+export const getPublicUser = createAsyncThunk<
+  { user: PublicUserType['data']['user'] },
+  string,
+  TThunkApi
+>('userProfile/getPublicUser', async (userId, thunkAPI) => {
+  try {
+    const data = await thunkAPI.extra.userSA.getPublicUser(userId)
+    if ('error' in data && data.error) {
+      throw new Error(data.error.message)
     }
+    if ('id' in data && data.id) {
+      return data
+    } else {
+      throw new Error('Unexpected server response')
+    }
+  } catch (error) {
+    thunkAPI.dispatch(setError((error as Error).message))
+    return thunkAPI.rejectWithValue((error as Error).message)
   }
-)
+})
+
 //todo:combine functions
 export const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState,
-  reducers: {
-    setUserProfile: (_, action: PayloadAction<{ str: string }>) => {
-      //todo: должно совпадать с ретюрном санка
-      return { isLoading: false, userPrivateData: {}, userPublicData: {} }
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getPrivateUser.pending, (state) => {
       return { ...state, isLoading: true }
     })
     builder.addCase(
       getPrivateUser.fulfilled,
-      (state, action: PayloadAction<TUserProfileData>) => {
+      (state, action: PayloadAction<IUserProfileData>) => {
         return {
           ...state,
           isLoading: false,
@@ -89,9 +89,21 @@ export const userProfileSlice = createSlice({
     builder.addCase(getPrivateUser.rejected, () => {
       return { ...initialState, isLoading: false }
     })
+    builder.addCase(getPublicUser.pending, (state) => {
+      return { ...state }
+    })
+    builder.addCase(
+      getPublicUser.fulfilled,
+      (
+        state,
+        action: PayloadAction<{ user: PublicUserType['data']['user'] }>
+      ) => {
+        return { ...state, action: action.payload }
+      }
+    )
   }
 })
 
-export const { setUserProfile } = userProfileSlice.actions
+export const {} = userProfileSlice.actions
 
 export default userProfileSlice.reducer
