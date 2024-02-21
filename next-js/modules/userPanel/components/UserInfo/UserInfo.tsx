@@ -1,15 +1,17 @@
 'use client'
-import React, { useEffect } from 'react'
-import { useAppSelector, useAppStore } from '@/clientServices/redux/hooks'
-import { getUserProfileData } from '@/clientServices/redux/features/userProfile/userProfileSlice'
+import React from 'react'
+import classes from './UserInfo.module.css'
 
-const UserInfo: React.FC = () => {
-  const store = useAppStore()
-  const select = useAppSelector((state) => state.userProfile)
-  useEffect(() => {
-    store.dispatch(getUserProfileData())
-  }, [])
-  return <div>PANEL</div>
+export type TUserInfo = {
+  username: string
+  name: string
+}
+
+const UserInfo: React.FC<{ userInfo: TUserInfo }> = ({ userInfo }) => {
+  //todo: types
+  return (
+    <h1 className={classes.title}>Привет, {userInfo.userPrivateData.id}</h1>
+  )
 }
 
 export default UserInfo

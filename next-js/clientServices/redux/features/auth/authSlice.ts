@@ -1,11 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   setError,
   setInto,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
-import { authSA } from '@/serverServices/supabase/exports'
-import { Session, User, WeakPassword } from '@supabase/gotrue-js'
+import { TAuthSA } from '@/serverServices/supabase/exports'
+import { Session } from '@supabase/gotrue-js'
+import { AsyncReturnType } from '@/types/typesUtils'
 
 type TAuthState = { exists: boolean; isLoading: boolean }
 
@@ -13,14 +14,12 @@ const initialState: TAuthState = { exists: false, isLoading: true }
 
 type TThunkApi = {
   extra: {
-    authSA: typeof authSA
+    authSA: TAuthSA
   }
 }
 
-interface ILoggedUser {
-  user: User
-  session: Session
-  weakPassword?: WeakPassword | undefined
+type ILoggedUser = {
+  user: AsyncReturnType<TAuthSA['SignInWithPassword']>['user']
 }
 
 interface ICheckedSession {
@@ -38,7 +37,7 @@ export const authWithCredentials = createAsyncThunk<
       throw new Error(data.error.message)
     }
     if (data) {
-      thunkAPI.dispatch(setSuccess('Logged in!'))
+      thunkAPI.dispatch(setSuccess('Successfully logged in!'))
       return data
     }
     throw new Error('Unexpected server response')
@@ -98,6 +97,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //Auth
     builder.addCase(
       authWithCredentials.pending ||
         checkLocalSession.pending ||
@@ -115,16 +115,23 @@ export const authSlice = createSlice({
     builder.addCase(authWithCredentials.fulfilled, (state) => {
       return { ...state, exists: true, isLoading: false }
     })
-    builder.addCase(checkLocalSession.fulfilled, (state, action) => {
-      if (action.payload.session?.access_token) {
-        return { ...state, exists: true, isLoading: false }
-      } else return { ...state, exists: false, isLoading: false }
+    builder.addCase(
+      checkLocalSession.fulfilled,
+      (state, action: PayloadAction<ICheckedSession>) => {
+        if (action.payload.session?.access_token) {
+          return { ...state, exists: true, isLoading: false }
+        } else return { ...state, exists: false, isLoading: false }
+      }
+    )
+    //SignOut
+    builder.addCase(signOut.pending, (state) => {
+      return { ...state, isLoading: true }
     })
     builder.addCase(signOut.fulfilled, (state) => {
       return { ...state, isLoading: false, exists: false }
     })
     builder.addCase(signOut.rejected, (state) => {
-      return { ...state, isLoading: true }
+      return { ...state }
     })
   }
 })
