@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { userSA } from '@/serverServices/supabase/exports'
+import { TUserSA } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { User } from '@supabase/gotrue-js'
-import { PublicUserType } from '@/serverServices/supabase/serverActions/userActions'
+import { IPublicUser } from '@/serverServices/supabase/serverActions/userActions'
 
 type TProfileState = {
   userPrivateData: {}
@@ -10,23 +10,26 @@ type TProfileState = {
   isLoading: boolean
 }
 
-type TThunkApi = {
-  extra: { userSA: typeof userSA }
-  rejectValue: string
-} //todo: export this
-
 const initialState: TProfileState = {
   isLoading: true,
   userPrivateData: {},
   userPublicData: {}
 }
 
-interface IUserProfileData {
+type TThunkApi = {
+  extra: { userSA: TUserSA }
+}
+
+interface IPrivateUserData {
   user: User
 }
 
+interface IPublicUserData {
+  user: IPublicUser['data']['user']
+}
+
 export const getPrivateUser = createAsyncThunk<
-  IUserProfileData,
+  IPrivateUserData,
   void,
   TThunkApi
 >('userProfile/getPrivateUser', async (_, thunkAPI) => {
@@ -47,7 +50,7 @@ export const getPrivateUser = createAsyncThunk<
 })
 
 export const getPublicUser = createAsyncThunk<
-  { user: PublicUserType['data']['user'] },
+  IPublicUserData,
   string,
   TThunkApi
 >('userProfile/getPublicUser', async (userId, thunkAPI) => {
@@ -55,8 +58,7 @@ export const getPublicUser = createAsyncThunk<
     const data = await thunkAPI.extra.userSA.getPublicUser(userId)
     if ('error' in data && data.error) {
       throw new Error(data.error.message)
-    }
-    if ('id' in data && data.id) {
+    } else if ('id' in data && data.id) {
       return data
     } else {
       throw new Error('Unexpected server response')
@@ -78,7 +80,7 @@ export const userProfileSlice = createSlice({
     })
     builder.addCase(
       getPrivateUser.fulfilled,
-      (state, action: PayloadAction<IUserProfileData>) => {
+      (state, action: PayloadAction<IPrivateUserData>) => {
         return {
           ...state,
           isLoading: false,
@@ -94,11 +96,8 @@ export const userProfileSlice = createSlice({
     })
     builder.addCase(
       getPublicUser.fulfilled,
-      (
-        state,
-        action: PayloadAction<{ user: PublicUserType['data']['user'] }>
-      ) => {
-        return { ...state, action: action.payload }
+      (state, action: PayloadAction<IPublicUserData>) => {
+        return { ...state, userPublicData: action.payload }
       }
     )
   }
