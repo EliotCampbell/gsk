@@ -13,7 +13,7 @@ export const SignInWithPassword = async (formData: FormData) => {
     if (data) {
       return data
     } else {
-      throw new Error('Unexpected supabase Error')
+      throw new Error('Unexpected supabase response')
     }
   } catch (error) {
     return { error: { message: (error as Error).message } }
@@ -29,7 +29,7 @@ export const serverCheckLocalSession = async () => {
     if (data) {
       return data
     } else {
-      throw new Error('Unexpected supabase Error')
+      throw new Error('Unexpected supabase response')
     }
   } catch (error) {
     return { error: { message: (error as Error).message } }
@@ -45,7 +45,7 @@ export const serverSignOut = async () => {
     if (!error) {
       return
     } else {
-      throw new Error('Unexpected supabase Error')
+      throw new Error('Unexpected supabase response')
     }
   } catch (error) {
     return { data: { error: { message: (error as Error).message } } }
