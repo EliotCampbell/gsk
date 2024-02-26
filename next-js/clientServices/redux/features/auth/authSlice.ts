@@ -4,36 +4,30 @@ import {
   setInto,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
-import { TAuthSA } from '@/serverServices/supabase/exports'
-import { Session } from '@supabase/gotrue-js'
-import { AsyncReturnType } from '@/types/typesUtils'
+import {
+  ICheckLocalSession,
+  ISignInWithPassword,
+  AuthSAType
+} from '@/serverServices/supabase/exports'
 
-type TAuthState = { exists: boolean; isLoading: boolean }
+type AuthStateType = { exists: boolean; isLoading: boolean }
 
-const initialState: TAuthState = { exists: false, isLoading: true }
+const initialState: AuthStateType = { exists: false, isLoading: true }
 
-type TThunkApi = {
+type ThunkApiType = {
   extra: {
-    authSA: TAuthSA
+    authSA: AuthSAType
   }
 }
 
-type ILoggedUser = {
-  user: AsyncReturnType<TAuthSA['SignInWithPassword']>['user']
-}
-
-interface ICheckedSession {
-  session: Session | null
-}
-
-export const authWithCredentials = createAsyncThunk<
-  ILoggedUser,
+export const signInWithPassword = createAsyncThunk<
+  ISignInWithPassword['data'],
   FormData,
-  TThunkApi
->('auth/authWithCredentials', async (formData, thunkAPI) => {
+  ThunkApiType
+>('auth/signInWithPassword', async (formData, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.authSA.SignInWithPassword(formData)
-    if ('error' in data) {
+    const data = await thunkAPI.extra.authSA.signInWithPassword(formData)
+    if (data.error) {
       throw new Error(data.error.message)
     }
     if (data) {
@@ -48,20 +42,20 @@ export const authWithCredentials = createAsyncThunk<
 })
 
 export const checkLocalSession = createAsyncThunk<
-  ICheckedSession,
+  ICheckLocalSession['data'],
   void,
-  TThunkApi
+  ThunkApiType
 >('auth/checkLocalSession', async (_, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.authSA.serverCheckLocalSession()
-    if ('error' in data && data.error) {
+    const data = await thunkAPI.extra.authSA.checkLocalSession()
+    if (data.error) {
       throw new Error(data.error.message)
     }
-    if ('session' in data && data.session) {
+    if (data.session) {
       thunkAPI.dispatch(setSuccess('Session found successfully!'))
       return data
     }
-    if ('session' in data && !data.session) {
+    if (!data.session) {
       thunkAPI.dispatch(setInto('Session not found'))
       return data
     }
@@ -72,11 +66,11 @@ export const checkLocalSession = createAsyncThunk<
   }
 })
 
-export const signOut = createAsyncThunk<void, void, TThunkApi>(
+export const signOut = createAsyncThunk<void, void, ThunkApiType>(
   'auth/signOut',
   async (_, thunkAPI) => {
     try {
-      const data = await thunkAPI.extra.authSA.serverSignOut()
+      const data = await thunkAPI.extra.authSA.signOut()
       if (data) {
         throw new Error(data.data.error.message)
       }
@@ -99,7 +93,7 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     //Auth
     builder.addCase(
-      authWithCredentials.pending ||
+      signInWithPassword.pending ||
         checkLocalSession.pending ||
         signOut.pending,
       (state) => {
@@ -107,17 +101,17 @@ export const authSlice = createSlice({
       }
     )
     builder.addCase(
-      authWithCredentials.rejected || checkLocalSession.rejected,
+      signInWithPassword.rejected || checkLocalSession.rejected,
       (state) => {
         return { ...state, exists: false, isLoading: false }
       }
     )
-    builder.addCase(authWithCredentials.fulfilled, (state) => {
+    builder.addCase(signInWithPassword.fulfilled, (state) => {
       return { ...state, exists: true, isLoading: false }
     })
     builder.addCase(
       checkLocalSession.fulfilled,
-      (state, action: PayloadAction<ICheckedSession>) => {
+      (state, action: PayloadAction<ICheckLocalSession['data']>) => {
         if (action.payload.session?.access_token) {
           return { ...state, exists: true, isLoading: false }
         } else return { ...state, exists: false, isLoading: false }

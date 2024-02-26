@@ -1,12 +1,15 @@
 'use server'
 import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
-import { AsyncReturnType } from '@/serverServices/supabase/serverActions/args'
+import { AsyncReturnType } from '@/types/typesUtils'
 
 export const getPrivateUser = async () => {
   try {
-    const { data } = await supabase().auth.getUser()
+    const { data, error } = await supabase().auth.getUser()
+    if (error) {
+      throw error
+    }
     if (data.user) {
-      return data
+      return { user: data.user }
     }
     throw new Error('Unexpected supabase response')
   } catch (error) {
@@ -14,9 +17,13 @@ export const getPrivateUser = async () => {
   }
 }
 
+export interface IPrivateUser {
+  data: AsyncReturnType<typeof getPrivateUser>
+}
+
 export const getPublicUser = async (userId: string) => {
   try {
-    const { error, data } = await supabase()
+    const { data, error } = await supabase()
       .from('users_profiles')
       .select('id,name,surname,profile_image')
       .eq('id', userId)
@@ -33,6 +40,6 @@ export const getPublicUser = async (userId: string) => {
   }
 }
 
-export interface PublicUserType {
+export interface IPublicUser {
   data: AsyncReturnType<typeof getPublicUser>
 }

@@ -1,7 +1,8 @@
 'use server'
 import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
+import { AsyncReturnType } from '@/types/typesUtils'
 
-export const SignInWithPassword = async (formData: FormData) => {
+export const signInWithPassword = async (formData: FormData) => {
   try {
     const { error, data } = await supabase().auth.signInWithPassword({
       email: formData.get('email') as string,
@@ -11,7 +12,7 @@ export const SignInWithPassword = async (formData: FormData) => {
       throw error
     }
     if (data) {
-      return data
+      return { user: data.user }
     } else {
       throw new Error('Unexpected supabase response')
     }
@@ -20,14 +21,18 @@ export const SignInWithPassword = async (formData: FormData) => {
   }
 }
 
-export const serverCheckLocalSession = async () => {
+export interface ISignInWithPassword {
+  data: AsyncReturnType<typeof signInWithPassword>
+}
+
+export const checkLocalSession = async () => {
   try {
     const { data, error } = await supabase().auth.getSession()
     if (error) {
       throw error
     }
     if (data) {
-      return data
+      return { session: data.session }
     } else {
       throw new Error('Unexpected supabase response')
     }
@@ -36,7 +41,11 @@ export const serverCheckLocalSession = async () => {
   }
 }
 
-export const serverSignOut = async () => {
+export interface ICheckLocalSession {
+  data: AsyncReturnType<typeof checkLocalSession>
+}
+
+export const signOut = async () => {
   try {
     const { error } = await supabase().auth.signOut()
     if (error) {
@@ -50,4 +59,8 @@ export const serverSignOut = async () => {
   } catch (error) {
     return { data: { error: { message: (error as Error).message } } }
   }
+}
+
+export interface ISignOut {
+  data: AsyncReturnType<typeof signOut>
 }
