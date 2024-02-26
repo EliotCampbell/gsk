@@ -19,6 +19,13 @@
   color: var(--font-secondary-color);
 }
 
+.info {
+  align-self: center;
+  margin-top: 20px;
+  color: var(--font-secondary-color);
+  font-size: 1em;
+}
+
 .action {
   background: transparent;
   font-size: 1em;
