@@ -4,6 +4,7 @@ import UserInfo from '@/modules/userPanel/components/UserInfo/UserInfo'
 import { useAppSelector } from '@/clientServices/redux/hooks'
 import { shallowEqual } from 'react-redux'
 import { UserInfoType } from '@/modules/userPanel/types'
+import UserOptions from '@/modules/userPanel/components/UserOptions/UserOptions'
 
 const UserPanel: React.FC = () => {
   const { userInfo } = useAppSelector(
@@ -20,7 +21,12 @@ const UserPanel: React.FC = () => {
     shallowEqual
   )
 
-  return <UserInfo userInfo={userInfo} />
+  return (
+    <>
+      <UserInfo userInfo={userInfo} />
+      <UserOptions />
+    </>
+  )
 }
 
 export default UserPanel
