@@ -7,7 +7,7 @@
 .notFound {
   font-size: 5em;
   align-self: flex-start;
-  color: var(--grey-text-color);
+  color: var(--font-grey-color);
 }
 
 .logo {
@@ -19,12 +19,6 @@
   color: var(--font-secondary-color);
 }
 
-.info {
-  align-self: center;
-  margin-top: 20px;
-  color: var(--font-secondary-color);
-  font-size: 1em;
-}
 .action {
   background: transparent;
   font-size: 1em;
