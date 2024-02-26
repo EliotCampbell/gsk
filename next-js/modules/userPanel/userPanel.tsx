@@ -1,16 +1,26 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import UserInfo from '@/modules/userPanel/components/UserInfo/UserInfo'
-import { useAppSelector, useAppStore } from '@/clientServices/redux/hooks'
-import { getPrivateUser } from '@/clientServices/redux/features/userProfile/userProfileSlice'
+import { useAppSelector } from '@/clientServices/redux/hooks'
+import { shallowEqual } from 'react-redux'
+import { UserInfoType } from '@/modules/userPanel/types'
 
 const UserPanel: React.FC = () => {
-  const store = useAppStore()
-  const select = useAppSelector((state) => state.userProfile)
-  useEffect(() => {
-    store.dispatch(getPrivateUser())
-  }, [])
-  return <UserInfo userInfo={select} />
+  const { userInfo } = useAppSelector(
+    (state): { userInfo: UserInfoType } => ({
+      userInfo: {
+        id: state.userProfile.userPrivateData?.id || '',
+        name: state.userProfile.userPublicData?.name || '',
+        surname: state.userProfile.userPublicData?.surname || '',
+        img: state.userProfile.userPublicData?.profile_image || '',
+        username: state.userProfile.userPublicData?.username || '',
+        email: state.userProfile.userPrivateData?.email || ''
+      }
+    }),
+    shallowEqual
+  )
+
+  return <UserInfo userInfo={userInfo} />
 }
 
 export default UserPanel

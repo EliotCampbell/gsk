@@ -1,22 +1,21 @@
-.button{
-    background: var(--background-grey-color);
-    font-size: 16px;
-    color: var(--font-secondary-color);
-    border-radius: 3px;
-    padding: 5px;
-    width: 100%;
-    font-weight: 700;
-    align-self: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 42px;
-    transition: 300ms;
-    letter-spacing: 0.09em;
+.button {
+  background: var(--background-grey-color);
+  font-size: 16px;
+  color: var(--font-secondary-color);
+  border-radius: 3px;
+  padding: 5px;
+  width: 100%;
+  font-weight: 700;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  transition: 300ms;
+  letter-spacing: 0.09em;
 }
 
-.button:hover{
-    background: var(--background-grey-color-hover);
-    cursor: pointer;
+.button:hover {
+  background: var(--background-grey-color_hover);
+  cursor: pointer;
 }
-

@@ -25,7 +25,7 @@ export const getPublicUser = async (userId: string) => {
   try {
     const { data, error } = await supabase()
       .from('users_profiles')
-      .select('id,name,surname,profile_image')
+      .select('id,username,name,surname,profile_image')
       .eq('id', userId)
       .single()
 

@@ -1,103 +1,100 @@
-.NewsCard{
-    max-width: var(--max-width);
-    width: 100%;
-    padding: 0 0 20px;
+.NewsCard {
+  max-width: var(--max-width);
+  width: 100%;
+  padding: 0 0 20px;
 }
 
-.cardWrapper{
-    padding: 20px;
-    color: var(--font-secondary-color);
-    display: flex;
-    flex-direction: column;
-    background: var(--background);
-    border: 1px solid var(--border-color);
-    border-radius: 3px;
+.cardWrapper {
+  padding: 20px;
+  color: var(--font-secondary-color);
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
 }
 
-.cardWrapper:hover{
-    border-color: transparent;
-    box-shadow: 0 0 15px 0 var(--box-shadow-color);
-    transition: 300ms;
+.cardWrapper:hover {
+  border-color: transparent;
+  box-shadow: 0 0 15px 0 var(--box-shadow-color);
+  transition: 300ms;
 }
 
-.title{
-    font-size: 20px;
-    padding: 30px 0 10px 10px;
-    font-weight: 700;
+.title {
+  font-size: 20px;
+  padding: 30px 0 10px 10px;
+  font-weight: 700;
 }
 
-.title:hover{
-    text-decoration: underline;
-    cursor: pointer;
+.title:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.body{
-    padding: 10px 0 10px 10px;
-    font-size: 16px;
+.body {
+  padding: 10px 0 10px 10px;
+  font-size: 16px;
 }
 
-
-.body{
-    max-height: 150px;
-    padding: 10px 0 10px 10px;
-    font-size: 16px;
-    overflow: hidden;
-    position: relative;
+.body {
+  max-height: 150px;
+  padding: 10px 0 10px 10px;
+  font-size: 16px;
+  overflow: hidden;
+  position: relative;
 }
 
 .body:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 1.2em;
-    background: linear-gradient(to bottom,transparent, var(--background));
-    pointer-events: none;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1.2em;
+  background: linear-gradient(to bottom, transparent, var(--background));
+  pointer-events: none;
 }
 
 .body_extended {
-    padding: 10px 0 10px 10px;
-    font-size: 16px;
-
+  padding: 10px 0 10px 10px;
+  font-size: 16px;
 }
 
-.body p{
-    padding: 10px 0;
-    text-overflow: ellipsis;
-
+.body p {
+  padding: 10px 0;
+  text-overflow: ellipsis;
 }
 
 .body_extended p {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .origin {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .originPicture {
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    background: var(--grey-text-color);
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background: var(--font-grey-color);
 }
 
 .author {
-    padding-left: 10px;
-    font-size: 18px;
-    font-weight: 700;
+  padding-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.author:hover{
-    text-decoration: underline;
+.author:hover {
+  text-decoration: underline;
 }
 
-.timestamp{
-    font-size: 14px;
-    color: var(--grey-text-color);
-    margin-left: auto;
+.timestamp {
+  font-size: 14px;
+  color: var(--font-grey-color);
+  margin-left: auto;
 }
