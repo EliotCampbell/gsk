@@ -2,15 +2,10 @@
 
 import React, { ReactNode, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import {
-  useAppDispatch,
-  useAppSelector,
-  useAppStore
-} from '@/clientServices/redux/hooks'
+import { useAppSelector, useAppStore } from '@/clientServices/redux/hooks'
 import { clear } from '@/clientServices/redux/features/notification/notificationSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { TNotification } from '@/types/types'
-import { checkLocalSession } from '@/clientServices/redux/features/auth/authSlice'
 
 const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const select = useAppSelector((state) => state.notification)
@@ -35,13 +30,6 @@ const Notification: React.FC<{ children?: ReactNode }> = ({ children }) => {
         toast.error('Notification type is unknown')
     }
   }
-
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(checkLocalSession())
-  }, [])
-  //todo: remove session check
 
   useEffect(() => {
     select.message && createToast(select)

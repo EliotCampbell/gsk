@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import React, { ReactNode } from 'react'
 import MainLayout from '@/modules/mainLayout/MainLayout'
-import Notification from '@/modules/notification/Notification'
-import ServicesProvider from '@/app/ServicesProvider'
+import ReduxProvider from '@/app/ReduxProvider'
+import ClientServicesProvider from '@/app/ClientServicesProvider'
 
 export const metadata: Metadata = {
   title: 'ГСК',
@@ -14,11 +14,11 @@ const RootLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <ServicesProvider>
-          <Notification>
+        <ReduxProvider>
+          <ClientServicesProvider>
             <MainLayout>{children}</MainLayout>
-          </Notification>
-        </ServicesProvider>
+          </ClientServicesProvider>
+        </ReduxProvider>
       </body>
     </html>
   )
