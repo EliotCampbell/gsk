@@ -1,11 +1,9 @@
 'use client'
-import React from 'react'
-const Home = () => {
+import React, { FC } from 'react'
+const Home: FC = () => {
   return (
     <>
-      <form>
-        <button>check</button>
-      </form>
+      <h1>Main page</h1>
     </>
   )
 }

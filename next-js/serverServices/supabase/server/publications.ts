@@ -15,7 +15,7 @@ export const getPublications = async () => {
     return data
   } catch (error) {
     console.log(
-      `Supabase API error in getPublications: ${(error as Error).message}`
+      `Supabase API error of getPublications: ${(error as Error).message}`
     )
     return []
   }

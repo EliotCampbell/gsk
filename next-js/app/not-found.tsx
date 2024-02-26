@@ -1,7 +1,7 @@
-import React from 'react'
+import { FC } from 'react'
 import NotFound from '@/modules/notFound/NotFound'
 
-const NotFoundPage = () => {
+const NotFoundPage: FC = () => {
   return <NotFound />
 }
 
