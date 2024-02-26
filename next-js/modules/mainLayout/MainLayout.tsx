@@ -22,7 +22,7 @@ const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     {
       type: 'news',
       title: 'НОВОСТИ',
-      path: '/news',
+      path: '/publications',
       ico: <FiAlignCenter />
     },
     {
