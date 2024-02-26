@@ -1,43 +1,44 @@
-.section{
-    padding-left: 20px;
-    display: flex;
-    min-height: 40px;
+.section {
+  padding-left: 20px;
+  display: flex;
+  min-height: 40px;
 }
 
-.smallItem{
-    box-sizing: border-box;
-    color: var(--font-secondary-color);
-    transition: 300ms;
-    padding: 0 10px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+.smallItem {
+  box-sizing: border-box;
+  color: var(--font-secondary-color);
+  transition: 300ms;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: none;
 }
 
 .section > .smallItem:not(:last-child) {
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
 }
 
 .section > .smallItem:last-child {
-    border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
 }
 
 .ico {
-    min-height: 40px;
-    min-width: 20px;
+  min-height: 40px;
+  min-width: 20px;
 }
 
 .loginButton {
-    color: var(--font-color);
-    background: var(--font-secondary-color);
-    letter-spacing: 0.09em;
-    padding: 10px;
-    transition: 300ms;
-    border-radius: 2px;
+  color: var(--font-color);
+  background: var(--font-secondary-color);
+  letter-spacing: 0.09em;
+  padding: 10px;
+  transition: 300ms;
+  border-radius: 2px;
 }
 
 .loginButton:hover {
-    background: var(--font-secondary-color_hover);
+  background: var(--font-secondary-color_hover);
 }
