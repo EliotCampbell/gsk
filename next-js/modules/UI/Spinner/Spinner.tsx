@@ -4,13 +4,15 @@ import { FiRotateCw } from 'react-icons/fi'
 
 const Spinner: React.FC<{ rotate?: boolean }> = ({ rotate = true }) => {
   return (
-    <FiRotateCw
-      className={
-        rotate
-          ? `${classes.spinner} ${classes.spinner_pending}`
-          : classes.spinner
-      }
-    />
+    <div className={classes.spinnerContainer}>
+      <FiRotateCw
+        className={
+          rotate
+            ? `${classes.spinner} ${classes.spinner_pending}`
+            : classes.spinner
+        }
+      />
+    </div>
   )
 }
 
