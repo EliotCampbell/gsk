@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TNotification } from '@/types/types'
 
-type TNotificationState = TNotification
-const initialState: TNotificationState = {
+type NotificationsStateType = TNotification
+const initialState: NotificationsStateType = {
   message: '',
   type: ''
 }
 
 export const notificationSlice = createSlice({
-  name: 'notification',
+  name: 'notifications',
   initialState,
   reducers: {
     setError: (_, action: PayloadAction<string>) => {

@@ -33,10 +33,10 @@ export const getPrivateUser = createAsyncThunk<
 >('userProfile/getPrivateUser', async (_, thunkAPI) => {
   try {
     const data = await thunkAPI.extra.userSA.getPrivateUser()
-    if ('error' in data && data.error) {
+    if (data.error) {
       throw new Error(data.error.message)
     }
-    if ('user' in data && data.user) {
+    if (data.user) {
       return data
     } else {
       throw new Error('Unexpected server response')
