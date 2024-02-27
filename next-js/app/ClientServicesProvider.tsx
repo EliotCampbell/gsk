@@ -13,7 +13,7 @@ const ClientServicesProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const dispatch = useAppDispatch()
   const userId = useAppSelector(
-    (state) => state.userProfile.userPrivateData?.id
+    (state) => state.userProfile.userPrivateData.data?.id
   )
 
   useEffect(() => {

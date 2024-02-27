@@ -6,16 +6,20 @@ import {
 } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 
-type ProfileStateType = {
-  userPrivateData: Record<string, never> | IPrivateUser['data']['user']
-  userPublicData: Record<string, never> | IPublicUser['data']['user']
-  isLoading: boolean
-}
+type ProfileStateType = Required<{
+  userPrivateData: {
+    pending: boolean
+    data: IPrivateUser['data']['user'] | null
+  }
+  userPublicData: {
+    pending: boolean
+    data: IPublicUser['data']['user'] | null
+  }
+}>
 
 const initialState: ProfileStateType = {
-  isLoading: true,
-  userPrivateData: {},
-  userPublicData: {}
+  userPrivateData: { pending: true, data: null },
+  userPublicData: { pending: true, data: null }
 }
 
 type ThunkApiType = {
@@ -71,27 +75,41 @@ export const userProfileSlice = createSlice({
   extraReducers: (builder) => {
     //PrivateUser
     builder.addCase(getPrivateUser.pending, (state) => {
-      return { ...state, isLoading: true }
+      return {
+        ...state,
+        userPrivateData: { ...state.userPrivateData, pending: true }
+      }
     })
     builder.addCase(getPrivateUser.fulfilled, (state, action) => {
       return {
         ...state,
-        isLoading: false,
-        userPrivateData: action.payload.user
+        userPrivateData: { data: action.payload.user, pending: false }
       }
     })
-    builder.addCase(getPrivateUser.rejected, () => {
-      return { ...initialState, isLoading: false }
+    builder.addCase(getPrivateUser.rejected, (state) => {
+      return {
+        ...state,
+        userPrivateData: { ...state.userPrivateData, pending: false }
+      }
     })
     //PublicUser
     builder.addCase(getPublicUser.pending, (state) => {
-      return { ...state }
+      return {
+        ...state,
+        userPublicData: { ...state.userPublicData, pending: true }
+      }
     })
     builder.addCase(getPublicUser.fulfilled, (state, action) => {
-      return { ...state, userPublicData: action.payload.user }
+      return {
+        ...state,
+        userPublicData: { data: action.payload.user, pending: false }
+      }
     })
     builder.addCase(getPublicUser.rejected, (state) => {
-      return { ...state, isLoading: false }
+      return {
+        ...state,
+        userPublicData: { ...state.userPublicData, pending: false }
+      }
     })
   }
 })
