@@ -5,7 +5,9 @@ import { AsyncReturnType } from '@/types/typesUtils'
 
 export const getMyObjects = async () => {
   try {
-    const { data, error } = await supabase().from('objects').select('*')
+    const { data, error } = await supabase()
+      .from('objects')
+      .select('*,ownerships(owner_since, owner_until)')
     if (error) {
       throw error
     }
