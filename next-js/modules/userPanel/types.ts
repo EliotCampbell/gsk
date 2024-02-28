@@ -6,3 +6,7 @@ export type UserInfoType = {
   email: string
   img: string
 }
+
+export type MyObjectsType = {}
+
+export type AdType = {}

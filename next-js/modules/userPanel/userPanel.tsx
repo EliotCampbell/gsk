@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
 import UserOptions from '@/modules/userPanel/components/UserOptions/UserOptions'
 import { userPrivateDataSelector } from '@/modules/userPanel/selectors'
 import { getMyObjects } from '@/clientServices/redux/features/objects/objectsSlice'
+import { getAdsByUser } from '@/clientServices/redux/features/ads/adsSlice'
 
 const UserPanel: FC = () => {
   const { userPrivateData, pending } = useAppSelector(userPrivateDataSelector)
@@ -14,6 +15,10 @@ const UserPanel: FC = () => {
   useEffect(() => {
     dispatch(getMyObjects())
   }, [])
+
+  useEffect(() => {
+    userPrivateData.id && dispatch(getAdsByUser(userPrivateData.id))
+  }, [userPrivateData.id])
 
   return (
     <>

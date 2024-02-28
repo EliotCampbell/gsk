@@ -3,22 +3,23 @@
 import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
 import { AsyncReturnType } from '@/types/typesUtils'
 
-export const getMyObjects = async () => {
+export const getAdsByUser = async (userId: string) => {
   try {
     const { data, error } = await supabase()
-      .from('objects')
-      .select('type, individual_number,ownerships(owner_since, owner_until)')
+      .from('ads')
+      .select('*')
+      .eq('user_id', userId)
     if (error) {
       throw error
     }
     if (data) {
-      return { objects: data }
+      return { ads: data }
     } else throw new Error('Unexpected supabase response')
   } catch (error) {
     return { error: { message: (error as Error).message } }
   }
 }
 
-export interface IGetMyObjects {
-  data: AsyncReturnType<typeof getMyObjects>
+export interface IGetAdsByUser {
+  data: AsyncReturnType<typeof getAdsByUser>
 }

@@ -4,10 +4,12 @@ import { IGetMyObjects } from '@/serverServices/supabase/serverActions/objectsAc
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 
 type ObjectsStateType = {
-  objects: []
+  myObjects: { data: IGetMyObjects['data']['objects']; pending: boolean }
 }
 
-const initialState: ObjectsStateType = { objects: [] }
+const initialState: ObjectsStateType = {
+  myObjects: { data: [], pending: true }
+}
 
 type ThunkApiType = {
   extra: { objectsSA: ObjectsSAType }
@@ -24,7 +26,6 @@ export const getMyObjects = createAsyncThunk<
       throw data.error
     }
     if (data.objects) {
-      console.log(data)
       return data
     } else {
       throw new Error('Unexpected server response')
@@ -40,8 +41,21 @@ export const objectsSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getMyObjects.pending, (state) => {})
-    builder.addCase(getMyObjects.fulfilled, (state, action) => {})
-    builder.addCase(getMyObjects.rejected, (state) => {})
+    builder.addCase(getMyObjects.pending, (state) => {
+      return { ...state, myObjects: { ...state.myObjects, pending: true } }
+    })
+    builder.addCase(getMyObjects.fulfilled, (state, action) => {
+      return {
+        ...state,
+        myObjects: { data: action.payload.objects, pending: false }
+      }
+    })
+    builder.addCase(getMyObjects.rejected, (state) => {
+      return { ...state, myObjects: { ...state.myObjects, pending: false } }
+    })
   }
 })
+
+export const {} = objectsSlice.actions
+
+export default objectsSlice.reducer

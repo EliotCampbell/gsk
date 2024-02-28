@@ -13,7 +13,11 @@ const UserOptions: FC = () => {
     router.replace(url)
   }
   const userOptions = [
-    { title: 'Мои объекты', url: 'my_objects', node: <MyObjects /> },
+    {
+      title: 'Мои объекты',
+      url: 'my_objects',
+      node: <MyObjects objects={{}} />
+    },
     { title: 'Мои объявления', url: 'my_ads', node: <MyAds /> }
   ]
   return (
