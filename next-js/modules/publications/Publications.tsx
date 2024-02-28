@@ -10,7 +10,7 @@ const Publications: React.FC = async () => {
     body: publication.body,
     created_at: publication.created_at,
     title: publication.title,
-    user_id: publication.user_id,
+    user_id: publication.user_id || '', //todo: remove crutch
     publication_images: publication.publication_images,
     username: publication.users_profiles?.username || 'User not found',
     user_name: publication.users_profiles?.name,
