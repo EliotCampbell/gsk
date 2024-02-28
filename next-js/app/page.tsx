@@ -1,6 +1,6 @@
-'use client'
-import React, { FC } from 'react'
-const Home: FC = () => {
+import React from 'react'
+
+const Home: React.FC = () => {
   return (
     <>
       <h1>Main page</h1>
