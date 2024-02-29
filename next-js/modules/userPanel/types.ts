@@ -7,6 +7,6 @@ export type UserInfoType = {
   img: string
 }
 
-export type MyObjectsType = {}
+export type ObjectType = {} | null
 
-export type AdType = {}
+export type AdType = {} | null
