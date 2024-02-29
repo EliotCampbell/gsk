@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { authSlice } from '@/clientServices/redux/features/auth/authSlice'
 import { AdsSAType } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { IGetAdsByUser } from '@/serverServices/supabase/serverActions/adsActions'
@@ -55,6 +54,6 @@ export const adsSlice = createSlice({
   }
 })
 
-export const {} = authSlice.actions
+export const {} = adsSlice.actions
 
 export default adsSlice.reducer
