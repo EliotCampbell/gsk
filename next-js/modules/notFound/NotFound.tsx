@@ -3,7 +3,7 @@ import React from 'react'
 import classes from './NotFound.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-
+//todo: проверить наличие ранее открытых страниц
 const NotFound: React.FC = () => {
   const router = useRouter()
   return (
@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
           главную
         </Link>
       </p>
-      {window.history.length > 2 && (
+      {router.back && (
         <p className={classes.info}>
           {'Вернуться '}
           <button
