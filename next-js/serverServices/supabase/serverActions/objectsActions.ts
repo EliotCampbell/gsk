@@ -7,7 +7,9 @@ export const getMyObjects = async () => {
   try {
     const { data, error } = await supabase()
       .from('objects')
-      .select('type, individual_number,ownerships(owner_since, owner_until)')
+      .select(
+        'id, type, individual_number,ownerships(owner_since, owner_until)'
+      )
     if (error) {
       throw error
     }
