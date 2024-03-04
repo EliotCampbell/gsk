@@ -1,0 +1,15 @@
+.SingleObject {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.SingleObject:hover {
+  text-decoration: underline;
+}
+
+.ico {
+  min-height: 40px;
+  min-width: 40px;
+  padding-right: 20px;
+}
