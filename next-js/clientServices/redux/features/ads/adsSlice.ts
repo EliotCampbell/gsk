@@ -2,9 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AdsSAType } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { IGetAdsByUser } from '@/serverServices/supabase/serverActions/adsActions'
+import { STATUS } from '@/types/statusTypes'
 
 type AdsStateType = {
-  ads: { data: IGetAdsByUser['data']['ads'] | []; pending: boolean }
+  adsList: {
+    data: NonNullable<IGetAdsByUser['data']['ads']> | []
+    status: STATUS
+  }
 }
 
 type ThunkApiType = {
@@ -13,21 +17,20 @@ type ThunkApiType = {
   }
 }
 
-const initialState: AdsStateType = { ads: { data: [], pending: true } }
+const initialState: AdsStateType = { adsList: { data: [], status: STATUS.ok } }
 
 export const getAdsByUser = createAsyncThunk<
-  IGetAdsByUser['data'],
+  IGetAdsByUser['data']['ads'],
   string,
   ThunkApiType
->('', async (userId, thunkAPI) => {
+>('ads/getAdsByUser', async (userId, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.adsSA.getAdsByUser(userId)
-    if (data.error) {
-      throw data.error
+    const { error, ads } = await thunkAPI.extra.adsSA.getAdsByUser(userId)
+    if (error) {
+      throw error
     }
-    if (data.ads) {
-      console.log(data)
-      return data
+    if (ads) {
+      return ads
     } else {
       throw new Error('Unexpected server response')
     }
@@ -43,13 +46,19 @@ export const adsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAdsByUser.pending, (state) => {
-      return { ...state, ads: { ...state.ads, pending: true } }
+      return { ...state, adsList: { data: [], status: STATUS.pending } }
     })
     builder.addCase(getAdsByUser.fulfilled, (state, action) => {
-      return { ...state, ads: { data: action.payload.ads, pending: false } }
+      return {
+        ...state,
+        adsList: {
+          data: action.payload ? action.payload : [],
+          status: STATUS.ok
+        }
+      }
     })
     builder.addCase(getAdsByUser.rejected, (state) => {
-      return { ...state, ads: { ...state.ads, pending: false } }
+      return { ...state, adsList: { data: [], status: STATUS.rejected } }
     })
   }
 })

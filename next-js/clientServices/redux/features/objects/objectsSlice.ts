@@ -2,13 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ObjectsSAType } from '@/serverServices/supabase/exports'
 import { IGetMyObjects } from '@/serverServices/supabase/serverActions/objectsActions'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
+import { STATUS } from '@/types/statusTypes'
 
 type ObjectsStateType = {
-  myObjects: { data: IGetMyObjects['data']['objects']; pending: boolean }
+  myObjects: {
+    data: NonNullable<IGetMyObjects['data']['objects']>
+    status: STATUS
+  }
 }
 
 const initialState: ObjectsStateType = {
-  myObjects: { data: [], pending: true }
+  myObjects: { data: [], status: STATUS.ok }
 }
 
 type ThunkApiType = {
@@ -16,17 +20,17 @@ type ThunkApiType = {
 }
 
 export const getMyObjects = createAsyncThunk<
-  IGetMyObjects['data'],
+  IGetMyObjects['data']['objects'],
   void,
   ThunkApiType
->('object/getMyObjects', async (_, thunkAPI) => {
+>('objects/getMyObjects', async (_, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.objectsSA.getMyObjects()
-    if (data.error) {
-      throw data.error
+    const { error, objects } = await thunkAPI.extra.objectsSA.getMyObjects()
+    if (error) {
+      throw error
     }
-    if (data.objects) {
-      return data
+    if (objects) {
+      return objects
     } else {
       throw new Error('Unexpected server response')
     }
@@ -42,16 +46,19 @@ export const objectsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getMyObjects.pending, (state) => {
-      return { ...state, myObjects: { ...state.myObjects, pending: true } }
+      return { ...state, myObjects: { data: [], status: STATUS.pending } }
     })
     builder.addCase(getMyObjects.fulfilled, (state, action) => {
       return {
         ...state,
-        myObjects: { data: action.payload.objects, pending: false }
+        myObjects: {
+          data: action.payload ? action.payload : [],
+          status: STATUS.ok
+        }
       }
     })
     builder.addCase(getMyObjects.rejected, (state) => {
-      return { ...state, myObjects: { ...state.myObjects, pending: false } }
+      return { ...state, myObjects: { data: [], status: STATUS.rejected } }
     })
   }
 })
