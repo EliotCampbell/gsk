@@ -12,9 +12,12 @@ const Publications: React.FC = async () => {
     title: publication.title,
     user_id: publication.user_id || '', //todo: remove crutch
     publication_images: publication.publication_images,
-    username: publication.users_profiles?.username || 'User not found',
-    user_name: publication.users_profiles?.name,
-    user_surname: publication.users_profiles?.surname
+    author: publication.users_profiles?.map((profile) => ({
+      username: profile.username,
+      name: profile.name,
+      surname: profile.surname,
+      profile_image: profile.profile_image || ''
+    }))
   }))
 
   return <PublicationsList publications={publications} />

@@ -5,10 +5,9 @@ export const getPublications = async () => {
     const { data, error } = await supabase()
       .from('publications')
       .select(
-        `id, created_at, title, body, user_id, publication_images, users_profiles(name, surname, username, profile_image)`
+        `id, created_at, title, body, user_id, publication_images, users_profiles(name, surname, username, profile_image)` //todo: переписать получение профиля
       )
       .order('created_at', { ascending: true })
-      .eq('is_hidden', 'false')
     if (error) {
       throw error
     }
