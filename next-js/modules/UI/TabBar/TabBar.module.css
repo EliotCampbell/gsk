@@ -16,6 +16,7 @@
   padding: 0 20px;
   transition: 300ms;
   flex-grow: 1;
+  user-select: none;
 }
 
 .singleTab:hover {
@@ -23,15 +24,11 @@
   background: var(--background-grey-color_hover);
 }
 
-.singleTab_selected {
-  border-bottom: 5px solid var(--font-secondary-color);
+.singleTab:active {
+  background: var(--background);
+  transition: none;
 }
 
-.TabBarBody {
-  margin-top: 20px;
-  padding: 20px;
-  background: var(--background);
-  color: var(--font-secondary-color);
-  font-weight: 700;
-  width: 100%;
+.singleTab_selected {
+  border-bottom: 5px solid var(--font-secondary-color);
 }

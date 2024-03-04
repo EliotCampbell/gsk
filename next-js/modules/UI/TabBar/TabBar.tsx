@@ -1,33 +1,30 @@
 'use client'
-import React, { FC, ReactNode } from 'react'
+import React, { FC } from 'react'
 import classes from './TabBar.module.css'
 import { TabBarOptionType } from '@/modules/UI/TabBar/types'
+import Link from 'next/link'
 
 const TabBar: FC<{
   options: Array<TabBarOptionType>
-  selected: string
-  clickHandler: (url: string) => void
-  children: ReactNode
-}> = ({ options, selected, clickHandler, children }) => {
+  selectedTab: string
+  linkCreator: (arg: string) => string
+}> = ({ options, selectedTab, linkCreator }) => {
   return (
-    <>
-      <div className={classes.TabBar}>
-        {options.map((el) => (
-          <div
-            onClick={() => clickHandler(el.url)}
-            className={
-              selected === el.url
-                ? `${classes.singleTab_selected} ${classes.singleTab}`
-                : classes.singleTab
-            }
-            key={el.title}
-          >
-            {el.title}
-          </div>
-        ))}
-      </div>
-      {children && <div className={classes.TabBarBody}>{children}</div>}
-    </>
+    <div className={classes.TabBar}>
+      {options.map((el) => (
+        <Link
+          href={linkCreator(el.optionType)}
+          className={
+            selectedTab === el.optionType
+              ? `${classes.singleTab_selected} ${classes.singleTab}`
+              : classes.singleTab
+          }
+          key={el.title}
+        >
+          {el.title}
+        </Link>
+      ))}
+    </div>
   )
 }
 

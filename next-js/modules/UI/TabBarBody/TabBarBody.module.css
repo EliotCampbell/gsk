@@ -1,0 +1,7 @@
+.TabBarBody {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--background);
+  color: var(--font-secondary-color);
+  width: 100%;
+}
