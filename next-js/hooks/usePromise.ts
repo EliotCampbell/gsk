@@ -1,8 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-export const usePromise = (fn: () => void, loadingState: boolean) => {
+export const usePromise = (valueToResolve: boolean) => {
+  const [isResolved, setIsResolved] = useState(false)
+
   useEffect(() => {
-    fn()
-  }, [])
-  if (loadingState) throw new Promise(() => {})
+    if (valueToResolve) {
+      setIsResolved(true)
+    }
+  }, [valueToResolve])
+
+  return new Promise((resolve) => {
+    if (isResolved) {
+      resolve(null)
+    }
+  })
 }
