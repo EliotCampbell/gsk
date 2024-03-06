@@ -1,18 +1,37 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   setError,
   setInto,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
 import {
+  AuthSAType,
   ICheckLocalSession,
+  IGetUser,
   ISignInWithPassword,
-  AuthSAType
+  IRefreshSession
 } from '@/serverServices/supabase/exports'
+import { STATUS } from '@/types/statusTypes'
 
-type AuthStateType = { exists: boolean; isLoading: boolean }
+type AuthStateType = {
+  sessionData: {
+    session:
+      | NonNullable<ICheckLocalSession['data']['session']>
+      | Record<string, never>
+    status: STATUS
+  }
+  userData: {
+    user:
+      | NonNullable<ISignInWithPassword['data']['user']>
+      | Record<string, never>
+    status: STATUS
+  }
+}
 
-const initialState: AuthStateType = { exists: false, isLoading: true }
+const initialState: AuthStateType = {
+  sessionData: { session: {}, status: STATUS.pending },
+  userData: { user: {}, status: STATUS.pending }
+}
 
 type ThunkApiType = {
   extra: {
@@ -21,18 +40,19 @@ type ThunkApiType = {
 }
 
 export const signInWithPassword = createAsyncThunk<
-  ISignInWithPassword['data'],
+  NonNullable<ISignInWithPassword['data']['user']>,
   FormData,
   ThunkApiType
->('auth/signInWithPassword', async (formData, thunkAPI) => {
+>('getUser/signInWithPassword', async (formData, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.authSA.signInWithPassword(formData)
-    if (data.error) {
-      throw new Error(data.error.message)
+    const { user, error } =
+      await thunkAPI.extra.authSA.signInWithPassword(formData)
+    if (error) {
+      throw new Error(error.message)
     }
-    if (data) {
+    if (user) {
       thunkAPI.dispatch(setSuccess('Successfully logged in!'))
-      return data
+      return user
     }
     throw new Error('Unexpected server response')
   } catch (error) {
@@ -42,22 +62,66 @@ export const signInWithPassword = createAsyncThunk<
 })
 
 export const checkLocalSession = createAsyncThunk<
-  ICheckLocalSession['data'],
+  ICheckLocalSession['data']['session'],
   void,
   ThunkApiType
->('auth/checkLocalSession', async (_, thunkAPI) => {
+>('getUser/checkLocalSession', async (_, thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.authSA.checkLocalSession()
-    if (data.error) {
-      throw new Error(data.error.message)
+    const { error, session } = await thunkAPI.extra.authSA.checkLocalSession()
+    if (error) {
+      throw error
     }
-    if (data.session) {
+    if (session) {
       thunkAPI.dispatch(setSuccess('Session found successfully!'))
-      return data
+      return session
     }
-    if (!data.session) {
+    if (!session) {
       thunkAPI.dispatch(setInto('Session not found'))
-      return data
+      return session
+    }
+    throw new Error('Unexpected server response')
+  } catch (error) {
+    thunkAPI.dispatch(setError((error as Error).message))
+    return thunkAPI.rejectWithValue((error as Error).message)
+  }
+})
+
+export const getUser = createAsyncThunk<
+  NonNullable<IGetUser['data']['user']>,
+  void,
+  ThunkApiType
+>('userProfile/getUser', async (_, thunkAPI) => {
+  try {
+    const { user, error } = await thunkAPI.extra.authSA.getUser()
+    if (error) {
+      throw error
+    }
+    if (user) {
+      return user
+    }
+    throw new Error('Unexpected server response')
+  } catch (error) {
+    thunkAPI.dispatch(setError((error as Error).message))
+    return thunkAPI.rejectWithValue((error as Error).message)
+  }
+})
+
+export const refreshSession = createAsyncThunk<
+  {
+    session: NonNullable<IRefreshSession['data']['session']>
+    user: NonNullable<IRefreshSession['data']['user']>
+  },
+  void,
+  ThunkApiType
+>('userProfile/refreshSession', async (_, thunkAPI) => {
+  try {
+    const { session, user, error } =
+      await thunkAPI.extra.authSA.refreshSession()
+    if (error) {
+      throw error
+    }
+    if (session && user) {
+      return { session: session, user: user }
     }
     throw new Error('Unexpected server response')
   } catch (error) {
@@ -67,12 +131,12 @@ export const checkLocalSession = createAsyncThunk<
 })
 
 export const signOut = createAsyncThunk<void, void, ThunkApiType>(
-  'auth/signOut',
+  'getUser/signOut',
   async (_, thunkAPI) => {
     try {
       const data = await thunkAPI.extra.authSA.signOut()
       if (data) {
-        throw new Error(data.data.error.message)
+        throw new Error(data.error.message)
       }
       if (!data) {
         thunkAPI.dispatch(setSuccess('Successfully sign out!'))
@@ -86,46 +150,115 @@ export const signOut = createAsyncThunk<void, void, ThunkApiType>(
   }
 )
 
+/**
+ * AuthSlice
+ */
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     //Auth
-    builder.addCase(
-      signInWithPassword.pending ||
-        checkLocalSession.pending ||
-        signOut.pending,
-      (state) => {
-        return { ...state, isLoading: true }
-      }
-    )
-    builder.addCase(
-      signInWithPassword.rejected || checkLocalSession.rejected,
-      (state) => {
-        return { ...state, exists: false, isLoading: false }
-      }
-    )
-    builder.addCase(signInWithPassword.fulfilled, (state) => {
-      return { ...state, exists: true, isLoading: false }
+    builder.addCase(signInWithPassword.pending, (state) => {
+      return { ...state, userData: { user: {}, status: STATUS.pending } }
     })
-    builder.addCase(
-      checkLocalSession.fulfilled,
-      (state, action: PayloadAction<ICheckLocalSession['data']>) => {
-        if (action.payload.session?.access_token) {
-          return { ...state, exists: true, isLoading: false }
-        } else return { ...state, exists: false, isLoading: false }
+    builder.addCase(signInWithPassword.fulfilled, (state, action) => {
+      return { ...state, userData: { user: action.payload, status: STATUS.ok } }
+    })
+    builder.addCase(signInWithPassword.rejected, (state) => {
+      return { ...state, userData: { user: {}, status: STATUS.rejected } }
+    })
+    //Check session
+    builder.addCase(checkLocalSession.pending, (state) => {
+      return { ...state, sessionData: { session: {}, status: STATUS.pending } }
+    })
+    builder.addCase(checkLocalSession.fulfilled, (state, action) => {
+      if (action.payload?.access_token) {
+        return {
+          ...state,
+          sessionData: { status: STATUS.ok, session: action.payload }
+        }
+      } else
+        return { ...state, sessionData: { status: STATUS.ok, session: {} } }
+    })
+    builder.addCase(checkLocalSession.rejected, (state) => {
+      return { ...state, sessionData: { session: {}, status: STATUS.rejected } }
+    })
+    //getUser
+    builder.addCase(getUser.pending, (state) => {
+      return {
+        ...state,
+        userPrivateData: {
+          ...state,
+          userData: { status: STATUS.pending, user: {} }
+        }
       }
-    )
+    })
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      return {
+        ...state,
+        userPrivateData: {
+          ...state,
+          userData: { status: STATUS.pending, user: action.payload }
+        }
+      }
+    })
+    builder.addCase(getUser.rejected, (state) => {
+      return {
+        ...state,
+        userPrivateData: {
+          ...state,
+          userData: { status: STATUS.rejected, user: {} }
+        }
+      }
+    })
     //SignOut
     builder.addCase(signOut.pending, (state) => {
-      return { ...state, isLoading: true }
+      return {
+        ...state,
+        sessionData: { session: {}, status: STATUS.pending },
+        userData: { status: STATUS.pending, user: {} }
+      }
     })
     builder.addCase(signOut.fulfilled, (state) => {
-      return { ...state, isLoading: false, exists: false }
+      return {
+        ...state,
+        sessionData: { session: {}, status: STATUS.ok },
+        userData: { status: STATUS.ok, user: {} }
+      }
     })
     builder.addCase(signOut.rejected, (state) => {
-      return { ...state }
+      return {
+        ...state,
+        sessionData: { session: {}, status: STATUS.rejected },
+        userData: { status: STATUS.rejected, user: {} }
+      }
+    })
+    //RefreshSession
+    builder.addCase(refreshSession.pending, (state) => {
+      return {
+        ...state,
+        sessionData: { session: {}, status: STATUS.pending },
+        userData: { status: STATUS.pending, user: {} }
+      }
+    })
+    builder.addCase(refreshSession.fulfilled, (state, action) => {
+      return {
+        ...state,
+        sessionData: {
+          status: STATUS.ok,
+          session: action.payload.session
+        },
+        userData: { status: STATUS.ok, user: action.payload.user }
+      }
+    })
+    builder.addCase(refreshSession.rejected, (state) => {
+      return {
+        ...state,
+        sessionData: { session: {}, status: STATUS.rejected },
+        userData: { status: STATUS.rejected, user: {} }
+      }
     })
   }
 })

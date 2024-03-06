@@ -1,67 +1,44 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
-  IPrivateUser,
   IPublicUser,
-  UserSAType
+  UserSAType,
+  utilsSAType
 } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
+import { STATUS } from '@/types/statusTypes'
 
 type ProfileStateType = Required<{
-  userPrivateData: {
-    pending: boolean
-    data: IPrivateUser['data']['user'] | null
-  }
   userPublicData: {
-    pending: boolean
-    data: IPublicUser['data']['user'] | null
+    status: STATUS
+    data: IPublicUser['data']['user'] | Record<string, never>
   }
 }>
 
 const initialState: ProfileStateType = {
-  userPrivateData: { pending: true, data: null },
-  userPublicData: { pending: true, data: null }
+  userPublicData: { status: STATUS.ok, data: {} }
 }
 
 type ThunkApiType = {
-  extra: { userSA: UserSAType }
+  extra: { userSA: UserSAType; utilsSA: utilsSAType }
 }
 
-export const getPrivateUser = createAsyncThunk<
-  IPrivateUser['data'],
-  void,
-  ThunkApiType
->('userProfile/getPrivateUser', async (_, thunkAPI) => {
-  try {
-    const data = await thunkAPI.extra.userSA.getPrivateUser()
-    if (data.error) {
-      throw new Error(data.error.message)
-    }
-    if (data.user) {
-      return data
-    } else {
-      throw new Error('Unexpected server response')
-    }
-  } catch (error) {
-    thunkAPI.dispatch(setError((error as Error).message))
-    return thunkAPI.rejectWithValue((error as Error).message)
-  }
-})
-
 export const getPublicUser = createAsyncThunk<
-  IPublicUser['data'],
-  string,
+  IPublicUser['data']['user'],
+  string | undefined,
   ThunkApiType
->('userProfile/getPublicUser', async (userId, thunkAPI) => {
+>('userProfile/getPublicUser', async (userId = '', thunkAPI) => {
   try {
-    const data = await thunkAPI.extra.userSA.getPublicUser(userId)
-    if (data.error) {
-      throw new Error(data.error.message)
+    const id = userId || (await thunkAPI.extra.utilsSA.getUserId())
+    if (!id) throw new Error('Field userId is not provided')
+    const { user, error } =
+      await thunkAPI.extra.userSA.getPublicUserInfo(userId)
+    if (error) {
+      throw error
     }
-    if (data.user) {
-      return data
-    } else {
-      throw new Error('Unexpected server response')
+    if (user) {
+      return user
     }
+    throw new Error('Unexpected server response')
   } catch (error) {
     thunkAPI.dispatch(setError((error as Error).message))
     return thunkAPI.rejectWithValue((error as Error).message)
@@ -73,42 +50,23 @@ export const userProfileSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    //PrivateUser
-    builder.addCase(getPrivateUser.pending, (state) => {
-      return {
-        ...state,
-        userPrivateData: { ...state.userPrivateData, pending: true }
-      }
-    })
-    builder.addCase(getPrivateUser.fulfilled, (state, action) => {
-      return {
-        ...state,
-        userPrivateData: { data: action.payload.user, pending: false }
-      }
-    })
-    builder.addCase(getPrivateUser.rejected, (state) => {
-      return {
-        ...state,
-        userPrivateData: { ...state.userPrivateData, pending: false }
-      }
-    })
     //PublicUser
     builder.addCase(getPublicUser.pending, (state) => {
       return {
         ...state,
-        userPublicData: { ...state.userPublicData, pending: true }
+        userPublicData: { ...state.userPublicData, status: STATUS.pending }
       }
     })
     builder.addCase(getPublicUser.fulfilled, (state, action) => {
       return {
         ...state,
-        userPublicData: { data: action.payload.user, pending: false }
+        userPublicData: { data: action.payload, status: STATUS.ok }
       }
     })
     builder.addCase(getPublicUser.rejected, (state) => {
       return {
         ...state,
-        userPublicData: { ...state.userPublicData, pending: false }
+        userPublicData: { ...state.userPublicData, status: STATUS.rejected }
       }
     })
   }

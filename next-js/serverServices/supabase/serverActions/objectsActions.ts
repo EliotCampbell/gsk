@@ -3,13 +3,14 @@
 import { createSupabaseSAClient as supabase } from '@/serverServices/supabase/clientCreators'
 import { AsyncReturnType } from '@/types/typesUtils'
 
-export const getMyObjects = async () => {
+export const getObjectsByUser = async (userId: string) => {
   try {
     const { data, error } = await supabase()
       .from('objects')
       .select(
         'id, type, individual_number,ownerships(owner_since, owner_until)'
       )
+      .eq('user_id', userId)
     if (error) {
       throw error
     }
@@ -21,6 +22,6 @@ export const getMyObjects = async () => {
   }
 }
 
-export interface IGetMyObjects {
-  data: AsyncReturnType<typeof getMyObjects>
+export interface IGetObjectsByUser {
+  data: AsyncReturnType<typeof getObjectsByUser>
 }

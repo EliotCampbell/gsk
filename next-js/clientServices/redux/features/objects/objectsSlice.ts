@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { ObjectsSAType } from '@/serverServices/supabase/exports'
-import { IGetMyObjects } from '@/serverServices/supabase/serverActions/objectsActions'
+import {
+  IGetObjectsByUser,
+  ObjectsSAType,
+  utilsSAType
+} from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
 
 type ObjectsStateType = {
   myObjects: {
-    data: NonNullable<IGetMyObjects['data']['objects']>
+    data: NonNullable<IGetObjectsByUser['data']['objects']>
     status: STATUS
   }
 }
@@ -16,16 +19,19 @@ const initialState: ObjectsStateType = {
 }
 
 type ThunkApiType = {
-  extra: { objectsSA: ObjectsSAType }
+  extra: { objectsSA: ObjectsSAType; utilsSA: utilsSAType }
 }
 
 export const getMyObjects = createAsyncThunk<
-  IGetMyObjects['data']['objects'],
-  void,
+  IGetObjectsByUser['data']['objects'],
+  string,
   ThunkApiType
->('objects/getMyObjects', async (_, thunkAPI) => {
+>('objects/getObjectsByUser', async (userId, thunkAPI) => {
   try {
-    const { error, objects } = await thunkAPI.extra.objectsSA.getMyObjects()
+    const id = userId || (await thunkAPI.extra.utilsSA.getUserId())
+    if (!id) throw new Error('Field userId is not provided')
+    const { error, objects } =
+      await thunkAPI.extra.objectsSA.getObjectsByUser(id)
     if (error) {
       throw error
     }
