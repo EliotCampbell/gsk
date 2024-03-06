@@ -1,11 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-  AdsSAType,
-  IGetAdsByUser,
-  utilsSAType
-} from '@/serverServices/supabase/exports'
+import { AdsSAType, IGetAdsByUser } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
+import { utilsCType } from '@/clientServices/supabase/exports'
 
 type AdsStateType = {
   adsList: {
@@ -17,7 +14,7 @@ type AdsStateType = {
 type ThunkApiType = {
   extra: {
     adsSA: AdsSAType
-    utilsSA: utilsSAType
+    utilsC: utilsCType
   }
 }
 
@@ -29,7 +26,7 @@ export const getAdsByUser = createAsyncThunk<
   ThunkApiType
 >('ads/getAdsByUser', async (userId = undefined, thunkAPI) => {
   try {
-    const id = userId || (await thunkAPI.extra.utilsSA.getUserId())
+    const id = userId || (await thunkAPI.extra.utilsC.getUserId())
     if (!id) throw new Error('Field userId is not provided')
     const { error, ads } = await thunkAPI.extra.adsSA.getAdsByUser(id)
     if (error) {

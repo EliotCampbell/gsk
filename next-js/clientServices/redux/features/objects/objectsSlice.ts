@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   IGetObjectsByUser,
-  ObjectsSAType,
-  utilsSAType
+  ObjectsSAType
 } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
+import { utilsCType } from '@/clientServices/supabase/exports'
 
 type ObjectsStateType = {
   myObjects: {
@@ -19,16 +19,16 @@ const initialState: ObjectsStateType = {
 }
 
 type ThunkApiType = {
-  extra: { objectsSA: ObjectsSAType; utilsSA: utilsSAType }
+  extra: { objectsSA: ObjectsSAType; utilsC: utilsCType }
 }
 
 export const getMyObjects = createAsyncThunk<
   IGetObjectsByUser['data']['objects'],
-  string,
+  string | undefined,
   ThunkApiType
 >('objects/getObjectsByUser', async (userId, thunkAPI) => {
   try {
-    const id = userId || (await thunkAPI.extra.utilsSA.getUserId())
+    const id = userId || (await thunkAPI.extra.utilsC.getUserId())
     if (!id) throw new Error('Field userId is not provided')
     const { error, objects } =
       await thunkAPI.extra.objectsSA.getObjectsByUser(id)

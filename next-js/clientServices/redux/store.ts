@@ -4,7 +4,8 @@ import authReducer from './features/auth/authSlice'
 import userProfileReducer from './features/userProfile/userProfileSlice'
 import objectsReducer from './features/objects/objectsSlice'
 import adsReducer from './features/ads/adsSlice'
-import * as actions from '@/serverServices/supabase/exports'
+import * as supabaseServerActions from '@/serverServices/supabase/exports'
+import * as supabaseClientFunctions from '@/clientServices/supabase/exports'
 
 export const makeStore = () => {
   return configureStore({
@@ -17,7 +18,12 @@ export const makeStore = () => {
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
-        thunk: { extraArgument: { ...actions } }
+        thunk: {
+          extraArgument: {
+            ...supabaseServerActions,
+            ...supabaseClientFunctions
+          }
+        }
       })
   })
 }

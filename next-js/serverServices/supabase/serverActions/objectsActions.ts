@@ -8,9 +8,9 @@ export const getObjectsByUser = async (userId: string) => {
     const { data, error } = await supabase()
       .from('objects')
       .select(
-        'id, type, individual_number,ownerships(owner_since, owner_until)'
+        'id, type, individual_number, ownerships(owner_since, owner_until, owner)'
       )
-      .eq('user_id', userId)
+      .in('ownerships.owner', [userId])
     if (error) {
       throw error
     }

@@ -1,11 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-  IPublicUser,
-  UserSAType,
-  utilsSAType
-} from '@/serverServices/supabase/exports'
+import { IPublicUser, UserSAType } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
+import { utilsCType } from '@/clientServices/supabase/exports'
 
 type ProfileStateType = Required<{
   userPublicData: {
@@ -19,7 +16,7 @@ const initialState: ProfileStateType = {
 }
 
 type ThunkApiType = {
-  extra: { userSA: UserSAType; utilsSA: utilsSAType }
+  extra: { userSA: UserSAType; utilsC: utilsCType }
 }
 
 export const getPublicUser = createAsyncThunk<
@@ -28,10 +25,9 @@ export const getPublicUser = createAsyncThunk<
   ThunkApiType
 >('userProfile/getPublicUser', async (userId = '', thunkAPI) => {
   try {
-    const id = userId || (await thunkAPI.extra.utilsSA.getUserId())
+    const id = userId || (await thunkAPI.extra.utilsC.getUserId())
     if (!id) throw new Error('Field userId is not provided')
-    const { user, error } =
-      await thunkAPI.extra.userSA.getPublicUserInfo(userId)
+    const { user, error } = await thunkAPI.extra.userSA.getPublicUserInfo(id)
     if (error) {
       throw error
     }
