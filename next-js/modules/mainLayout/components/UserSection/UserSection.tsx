@@ -8,18 +8,19 @@ import { signOut } from '@/clientServices/redux/features/auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
 import { shallowEqual } from 'react-redux'
 import Spinner from '@/modules/UI/Spinner/Spinner'
+import { STATUS } from '@/types/statusTypes'
 
 const UserSection: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { exists, isLoading } = useAppSelector(
+  const { exists, status } = useAppSelector(
     (state) => ({
-      exists: state.auth.exists,
-      isLoading: state.auth.isLoading
+      exists: !!state.auth.sessionData.session.access_token,
+      status: state.auth.sessionData.status
     }),
     shallowEqual
   )
 
-  return isLoading ? (
+  return status === STATUS.pending ? (
     <Spinner />
   ) : (
     <div className={classes.section}>
@@ -38,7 +39,7 @@ const UserSection: React.FC = () => {
           </button>
         </>
       ) : (
-        <Link href={'/auth'}>
+        <Link href={'/getUser'}>
           <button className={classes.loginButton} type={'button'}>
             ВОЙТИ
           </button>

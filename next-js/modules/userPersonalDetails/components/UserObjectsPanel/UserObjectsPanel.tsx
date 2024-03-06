@@ -5,13 +5,15 @@ import SingleObject from '@/modules/userPersonalDetails/components/SingleObject/
 import classes from './UserObjectsPanel.module.css'
 import { STATUS } from '@/types/statusTypes'
 import { usePromise } from '@/hooks/usePromise'
+import { useInit } from '@/hooks/useInit'
 
 const UserObjectsPanel: FC<{
   objects: ObjectType[]
   status: STATUS
   getData: () => {}
 }> = ({ objects, status, getData }) => {
-  usePromise(getData, status === STATUS.pending)
+  useInit(getData)
+  usePromise(status === STATUS.pending).then()
 
   return objects.length > 0 ? (
     <div className={classes.UserObjectsPanel}>

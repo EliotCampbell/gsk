@@ -1,10 +1,11 @@
+import { STATUS } from '@/types/statusTypes'
+
 export type UserInfoType = {
-  id: string
-  username: string
-  name: string
-  surname: string
-  email: string
-  img: string
+  userPrivateInfo: { data: { id: string; email: string }; status: STATUS }
+  userPublicInfo: {
+    data: { name: string; surname: string; img: string; username: string }
+    status: STATUS
+  }
 }
 
 export type ObjectType = {

@@ -3,32 +3,37 @@ import { createSelector } from 'reselect'
 
 const selectUserPublicData = (state: RootState) =>
   state.userProfile.userPublicData.data
-const selectUserPrivateData = (state: RootState) =>
-  state.userProfile.userPrivateData.data
+const selectUserPrivateData = (state: RootState) => state.auth.userData.user
 
-const selectPrivateDataPending = (state: RootState) =>
-  state.userProfile.userPrivateData.pending
+const selectPublicDataStatus = (state: RootState) =>
+  state.userProfile.userPublicData.status
 
-const selectPublicDataPending = (state: RootState) =>
-  state.userProfile.userPublicData.pending
+const selectPrivateDataStatus = (state: RootState) => state.auth.userData.status
 
 export const userPrivateDataSelector = createSelector(
   [
     selectUserPublicData,
     selectUserPrivateData,
-    selectPublicDataPending,
-    selectPrivateDataPending
+    selectPublicDataStatus,
+    selectPrivateDataStatus
   ],
-  (userPublicData, userPrivateData, publicDataPending, privateDataPending) => ({
-    userPrivateData: {
-      id: userPrivateData?.id || '',
-      name: userPublicData?.name || '',
-      surname: userPublicData?.surname || '',
-      img: userPublicData?.profile_image || '',
-      username: userPublicData?.username || '',
-      email: userPrivateData?.email || ''
+  (userPublicInfo, userPrivateInfo, publicDataStatus, privateDataStatus) => ({
+    userPrivateInfo: {
+      data: {
+        id: userPrivateInfo.id || '',
+        email: userPrivateInfo?.email || ''
+      },
+      status: privateDataStatus
     },
-    pending: privateDataPending || publicDataPending
+    userPublicInfo: {
+      data: {
+        name: userPublicInfo?.name || '',
+        surname: userPublicInfo?.surname || '',
+        img: userPublicInfo?.profile_image || '',
+        username: userPublicInfo?.username || ''
+      }, //todo: добавить возможность undefined
+      status: publicDataStatus
+    }
   })
 )
 

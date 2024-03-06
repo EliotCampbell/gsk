@@ -15,10 +15,6 @@ import { useQueryCreator } from '@/hooks/useQueryCreator'
 
 const UserPanel: FC = () => {
   const dispatch = useAppDispatch()
-  /*  const userId = useAppSelector(
-    //todo: решить с id
-    (state) => state.userProfile.userPrivateData.data?.id
-  )*/
 
   const adsData = useAppSelector(myAdsSelector)
   const objectsData = useAppSelector(myObjectsSelector)
@@ -42,7 +38,7 @@ const UserPanel: FC = () => {
         <UserAdsPanel
           ads={adsData.myAds}
           status={adsData.status}
-          getData={() => dispatch(getAdsByUser(''))}
+          getData={() => dispatch(getAdsByUser())}
         />
       )
     }

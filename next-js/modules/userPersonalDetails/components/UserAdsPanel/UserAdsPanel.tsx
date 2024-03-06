@@ -5,13 +5,15 @@ import { AdType } from '@/modules/userPanel/types'
 import classes from './UserAdsPanel.module.css'
 import { STATUS } from '@/types/statusTypes'
 import { usePromise } from '@/hooks/usePromise'
+import { useInit } from '@/hooks/useInit'
 
 const UserAdsPanel: FC<{
   ads: AdType[]
   status: STATUS
   getData: () => {}
 }> = ({ ads, status, getData }) => {
-  usePromise(getData, status === STATUS.pending)
+  useInit(getData)
+  usePromise(status === STATUS.pending).then()
   return ads.length > 0 ? (
     ads.map((el) => <SingleAd ad={el} key={el.id} />)
   ) : (
