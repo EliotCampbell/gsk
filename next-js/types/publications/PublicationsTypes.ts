@@ -9,6 +9,6 @@ type TSinglePublication = {
     username: string
     name: string | null | undefined
     surname: string | null | undefined
-    profile_image: string
-  }[]
+    profile_image: string | undefined | null
+  }
 }

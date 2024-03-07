@@ -18,8 +18,8 @@ const PublicationCard: React.FC<{ publication: TSinglePublication }> = ({
             className={classes.author}
             href={`/user/${publication.user_id}`}
           >
-            {`${publication.author[0].name} ${publication.author[0].surname}` ||
-              publication.author[0].username}
+            {`${publication.author.name} ${publication.author.surname}` ||
+              publication.author.username}
           </Link>
           <p className={classes.timestamp}>
             {new Intl.DateTimeFormat('ru-RU', {
