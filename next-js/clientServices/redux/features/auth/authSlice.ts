@@ -43,7 +43,7 @@ export const signInWithPassword = createAsyncThunk<
   NonNullable<ISignInWithPassword['data']['user']>,
   FormData,
   ThunkApiType
->('getUser/signInWithPassword', async (formData, thunkAPI) => {
+>('auth/signInWithPassword', async (formData, thunkAPI) => {
   try {
     const { user, error } =
       await thunkAPI.extra.authSA.signInWithPassword(formData)
@@ -65,7 +65,7 @@ export const checkLocalSession = createAsyncThunk<
   ICheckLocalSession['data']['session'],
   void,
   ThunkApiType
->('getUser/checkLocalSession', async (_, thunkAPI) => {
+>('auth/checkLocalSession', async (_, thunkAPI) => {
   try {
     const { error, session } = await thunkAPI.extra.authSA.checkLocalSession()
     if (error) {
@@ -90,7 +90,7 @@ export const getUser = createAsyncThunk<
   NonNullable<IGetUser['data']['user']>,
   void,
   ThunkApiType
->('userProfile/getUser', async (_, thunkAPI) => {
+>('auth/getUser', async (_, thunkAPI) => {
   try {
     const { user, error } = await thunkAPI.extra.authSA.getUser()
     if (error) {
@@ -113,7 +113,7 @@ export const refreshSession = createAsyncThunk<
   },
   void,
   ThunkApiType
->('userProfile/refreshSession', async (_, thunkAPI) => {
+>('auth/refreshSession', async (_, thunkAPI) => {
   try {
     const { session, user, error } =
       await thunkAPI.extra.authSA.refreshSession()
@@ -131,7 +131,7 @@ export const refreshSession = createAsyncThunk<
 })
 
 export const signOut = createAsyncThunk<void, void, ThunkApiType>(
-  'getUser/signOut',
+  'auth/signOut',
   async (_, thunkAPI) => {
     try {
       const data = await thunkAPI.extra.authSA.signOut()
