@@ -17,7 +17,7 @@ export const notificationSlice = createSlice({
     setSuccess: (_, action: PayloadAction<string>) => {
       return { message: action.payload, type: 'success' }
     },
-    setInto: (_, action: PayloadAction<string>) => {
+    setInfo: (_, action: PayloadAction<string>) => {
       return { message: action.payload, type: 'info' }
     },
     clear: () => {
@@ -26,7 +26,7 @@ export const notificationSlice = createSlice({
   }
 })
 
-export const { setError, setSuccess, setInto, clear } =
+export const { setError, setSuccess, setInfo, clear } =
   notificationSlice.actions
 
 export default notificationSlice.reducer
