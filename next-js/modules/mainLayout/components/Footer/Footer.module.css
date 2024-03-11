@@ -3,6 +3,6 @@
   min-width: 100vw;
   height: 100px;
   display: flex;
-  background: var(--background);
+  background: var(--background-color);
   border-top: var(--border-color) 1px solid;
 }

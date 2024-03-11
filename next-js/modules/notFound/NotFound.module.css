@@ -16,19 +16,19 @@
   font-size: 3em;
   display: flex;
   justify-content: center;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
 }
 
 .info {
   align-self: center;
   margin-top: 20px;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   font-size: 1em;
 }
 
 .action {
   background: transparent;
   font-size: 1em;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   font-weight: 700;
 }

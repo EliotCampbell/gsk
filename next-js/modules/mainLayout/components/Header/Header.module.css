@@ -1,7 +1,7 @@
 .Header {
   height: 80px;
   margin: 30px 0;
-  background: var(--background);
+  background: var(--background-color);
   display: flex;
   justify-content: center;
   min-width: 100vw;
@@ -22,7 +22,7 @@
   font-size: 38px;
   font-weight: 700;
   display: flex;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   border-radius: 5px;
   align-items: center;
   min-height: 100%;
@@ -37,7 +37,7 @@
 .menuItem {
   min-width: 120px;
   min-height: 100%;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   transition: 400ms;
   padding: 0 10px;
   display: flex;
@@ -50,10 +50,11 @@
 }
 
 .menuItem:hover {
-  color: var(--font-secondary-color_hover);
+  color: var(--font-garage-color_hover);
   cursor: pointer;
-  border-color: var(--font-secondary-color_hover);
+  border-color: var(--font-garage-color_hover);
   box-sizing: border-box;
+  background: var(--background-color_hover);
 }
 
 .ico svg {

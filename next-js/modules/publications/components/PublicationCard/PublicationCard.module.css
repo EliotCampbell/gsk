@@ -6,10 +6,10 @@
 
 .cardWrapper {
   padding: 20px;
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   display: flex;
   flex-direction: column;
-  background: var(--background);
+  background: var(--background-color);
   border: 1px solid var(--border-color);
   border-radius: 3px;
 }
@@ -51,7 +51,7 @@
   right: 0;
   left: 0;
   height: 1.2em;
-  background: linear-gradient(to bottom, transparent, var(--background));
+  background: linear-gradient(to bottom, transparent, var(--background-color));
   pointer-events: none;
 }
 

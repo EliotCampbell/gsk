@@ -8,15 +8,20 @@
 :root {
   --max-width: 1440px;
   --font: Roboto, sans-serif;
-  --background: #fafafa;
+  --background-color: #fafafa;
+  --background-color_hover: #f3f3f3;
   --background-grey-color: #f0f0f0;
   --background-grey-color_hover: #d2d2d2;
+  --background-garage-color: #9a270f;
+  --background-garage-color_hover: #791808;
   --font-color: #ffffff;
   --font-grey-color: #ababab;
-  --font-secondary-color: #9a270f;
-  --font-secondary-color_hover: #c5492c;
+  --font-garage-color: #9a270f;
+  --font-garage-color_hover: #791808;
   --border-color: rgba(141, 141, 141, 0.3);
+  --border-garage-color: #9a270f;
   --box-shadow-color: rgba(164, 112, 103, 0.3);
+  --error-color: #ff0000;
 }
 
 * {
@@ -61,4 +66,9 @@ textarea {
 
 button:hover {
   cursor: pointer;
+}
+
+textArea::placeholder,
+input::placeholder {
+  color: var(--font-grey-color);
 }

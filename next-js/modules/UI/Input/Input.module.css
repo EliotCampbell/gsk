@@ -7,7 +7,7 @@
   min-width: 300px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  background: var(--background);
+  background: var(--background-color);
   border: solid 1px var(--border-color);
   border-radius: 2px;
   font-size: 16px;
@@ -30,7 +30,7 @@
   height: 20px;
   font-weight: bold;
   margin: 0 10px;
-  background: var(--background);
+  background: var(--background-color);
   top: 10px;
   width: fit-content;
   width: -moz-fit-content;
