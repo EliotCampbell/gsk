@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IPublicUser, UserSAType } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
-import { utilsCType } from '@/clientServices/supabase/exports'
+import { UtilsCType } from '@/clientServices/supabase/exports'
 
 type ProfileStateType = Required<{
   userPublicData: {
@@ -16,7 +16,7 @@ const initialState: ProfileStateType = {
 }
 
 type ThunkApiType = {
-  extra: { userSA: UserSAType; utilsC: utilsCType }
+  extra: { userSA: UserSAType; utilsC: UtilsCType }
 }
 
 export const getPublicUser = createAsyncThunk<
