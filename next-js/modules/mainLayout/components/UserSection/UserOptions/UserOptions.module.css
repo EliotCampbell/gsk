@@ -1,0 +1,27 @@
+.userOptions {
+  position: absolute;
+  top: 100%;
+  transform: translateX(-100%);
+  background: var(--background-color);
+  border: 1px solid var(--border-garage-color);
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.option {
+  color: var(--font-garage-color);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  padding: 10px 20px 10px 5px;
+}
+
+.option:hover {
+  cursor: pointer;
+  background: var(--background-color_hover);
+}
+
+.userOptions > .option:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
