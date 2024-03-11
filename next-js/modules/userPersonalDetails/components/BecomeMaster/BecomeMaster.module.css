@@ -1,0 +1,37 @@
+.becomeMaster {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  align-self: flex-start;
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.hint {
+  padding-top: 20px;
+  color: var(--font-grey-color);
+  font-size: 14px;
+}
+
+.masters {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--font-garage-color);
+}
+
+.masters:hover {
+  text-decoration: underline;
+  color: var(--font-garage-color_hover);
+}
+
+.form {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
