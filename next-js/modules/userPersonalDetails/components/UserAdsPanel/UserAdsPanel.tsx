@@ -1,20 +1,20 @@
 'use client'
 import React, { FC } from 'react'
 import SingleAd from '@/modules/userPersonalDetails/components/SingleAd/SingleAd'
-import { AdType } from '@/modules/userPanel/types'
 import classes from './UserAdsPanel.module.css'
-import { STATUS } from '@/types/statusTypes'
-import { usePromise } from '@/hooks/usePromise'
-import { useInit } from '@/hooks/useInit'
+import { AdType } from '@/modules/userPersonalDetails/types'
+import { useLayoutInit } from '@/hooks/useLayoutInit'
+import Spinner from '@/modules/UI/Spinner/Spinner'
 
 const UserAdsPanel: FC<{
   ads: AdType[]
-  status: STATUS
+  pending: boolean
   getData: () => {}
-}> = ({ ads, status, getData }) => {
-  useInit(getData)
-  usePromise(status === STATUS.pending).then()
-  return ads.length > 0 ? (
+}> = ({ ads, pending, getData }) => {
+  useLayoutInit(getData)
+  return pending ? (
+    <Spinner />
+  ) : ads.length > 0 ? (
     ads.map((el) => <SingleAd ad={el} key={el.id} />)
   ) : (
     <div className={classes.fallbackContainer}>
