@@ -5,7 +5,7 @@ import {
 } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
-import { utilsCType } from '@/clientServices/supabase/exports'
+import { UtilsCType } from '@/clientServices/supabase/exports'
 
 type ObjectsStateType = {
   myObjects: {
@@ -19,7 +19,7 @@ const initialState: ObjectsStateType = {
 }
 
 type ThunkApiType = {
-  extra: { objectsSA: ObjectsSAType; utilsC: utilsCType }
+  extra: { objectsSA: ObjectsSAType; utilsC: UtilsCType }
 }
 
 export const getMyObjects = createAsyncThunk<
