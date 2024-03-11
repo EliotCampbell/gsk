@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AdsSAType, IGetAdsByUser } from '@/serverServices/supabase/exports'
 import { setError } from '@/clientServices/redux/features/notification/notificationSlice'
 import { STATUS } from '@/types/statusTypes'
-import { utilsCType } from '@/clientServices/supabase/exports'
+import { UtilsCType } from '@/clientServices/supabase/exports'
 
 type AdsStateType = {
   adsList: {
@@ -14,7 +14,7 @@ type AdsStateType = {
 type ThunkApiType = {
   extra: {
     adsSA: AdsSAType
-    utilsC: utilsCType
+    utilsC: UtilsCType
   }
 }
 
