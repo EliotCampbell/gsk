@@ -1,0 +1,18 @@
+.SubmitButton {
+  background: var(--background-garage-color);
+  color: var(--font-color);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0 25px;
+  letter-spacing: 0.09em;
+  border-radius: 2px;
+  min-height: 50px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SubmitButton:hover {
+  background: var(--background-garage-color_hover);
+}
