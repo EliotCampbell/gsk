@@ -35,7 +35,7 @@ export const createService = createAsyncThunk<
   ThunkAPIType
 >('services/createService', async (fields, thunkAPI) => {
   try {
-    const { error, data, status, statusText, count } =
+    const { error, data } =
       await thunkAPI.extra.servicesSA.createService(fields)
     if (error) throw error
     if (data) {
@@ -73,8 +73,7 @@ export const deleteServiceById = createAsyncThunk<{}, string, ThunkAPIType>(
   'services/deleteServiceById',
   async (id, thunkAPI) => {
     try {
-      const { data, status, statusText, count, error } =
-        await thunkAPI.extra.servicesSA.deleteServiceById(id)
+      const { error } = await thunkAPI.extra.servicesSA.deleteServiceById(id)
       if (error) {
         throw error
       }
