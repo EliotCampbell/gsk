@@ -6,7 +6,7 @@ export const getPublicUserInfo = async (userId: string) => {
   try {
     const { data, error } = await supabase()
       .from('users_profiles')
-      .select('id,username,name,surname,profile_image')
+      .select('user_id,username,name,surname,profile_image')
       .eq('user_id', userId)
       .single()
 
