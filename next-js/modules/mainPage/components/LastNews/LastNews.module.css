@@ -1,0 +1,15 @@
+.lastNews {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: var(--background-color);
+  color: var(--font-garage-color);
+}
+
+.newsPreview {
+  padding: 10px;
+}
+
+.title {
+  font-weight: bold;
+  max-width: 300px;
+}
