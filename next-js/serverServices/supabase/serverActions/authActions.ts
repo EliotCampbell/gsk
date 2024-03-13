@@ -12,7 +12,7 @@ export const signInWithPassword = async (formData: FormData) => {
       throw error
     }
     if (data) {
-      return { user: data.user }
+      return { user: data.user, session: data.session }
     } else {
       throw new Error('Unexpected supabase response')
     }

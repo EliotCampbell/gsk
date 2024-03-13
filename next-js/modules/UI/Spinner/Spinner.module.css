@@ -20,7 +20,7 @@
 }
 
 .spinner_colored {
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
 }
 
 @keyframes rotate {

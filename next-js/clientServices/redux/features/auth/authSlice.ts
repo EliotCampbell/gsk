@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   setError,
-  setInto,
+  setInfo,
   setSuccess
 } from '@/clientServices/redux/features/notification/notificationSlice'
 import {
@@ -40,19 +40,22 @@ type ThunkApiType = {
 }
 
 export const signInWithPassword = createAsyncThunk<
-  NonNullable<ISignInWithPassword['data']['user']>,
+  {
+    user: NonNullable<ISignInWithPassword['data']['user']>
+    session: NonNullable<ISignInWithPassword['data']['session']>
+  },
   FormData,
   ThunkApiType
 >('auth/signInWithPassword', async (formData, thunkAPI) => {
   try {
-    const { user, error } =
+    const { user, error, session } =
       await thunkAPI.extra.authSA.signInWithPassword(formData)
     if (error) {
       throw new Error(error.message)
     }
-    if (user) {
+    if (user && session) {
       thunkAPI.dispatch(setSuccess('Successfully logged in!'))
-      return user
+      return { user, session }
     }
     throw new Error('Unexpected server response')
   } catch (error) {
@@ -76,7 +79,7 @@ export const checkLocalSession = createAsyncThunk<
       return session
     }
     if (!session) {
-      thunkAPI.dispatch(setInto('Session not found'))
+      thunkAPI.dispatch(setInfo('Session not found'))
       return session
     }
     throw new Error('Unexpected server response')
@@ -161,13 +164,25 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     //Auth
     builder.addCase(signInWithPassword.pending, (state) => {
-      return { ...state, userData: { user: {}, status: STATUS.pending } }
+      return {
+        ...state,
+        userData: { user: {}, status: STATUS.pending },
+        sessionData: { session: {}, status: STATUS.pending }
+      }
     })
     builder.addCase(signInWithPassword.fulfilled, (state, action) => {
-      return { ...state, userData: { user: action.payload, status: STATUS.ok } }
+      return {
+        ...state,
+        userData: { user: action.payload.user, status: STATUS.ok },
+        sessionData: { session: action.payload.session, status: STATUS.ok }
+      }
     })
     builder.addCase(signInWithPassword.rejected, (state) => {
-      return { ...state, userData: { user: {}, status: STATUS.rejected } }
+      return {
+        ...state,
+        userData: { user: {}, status: STATUS.rejected },
+        sessionData: { session: {}, status: STATUS.pending }
+      }
     })
     //Check session
     builder.addCase(checkLocalSession.pending, (state) => {
