@@ -1,6 +1,6 @@
 'use client'
 import React, { FC } from 'react'
-import { AdType } from '@/modules/userPanel/types'
+import { AdType } from '@/modules/UserPanel/types'
 import classes from './SingleAd.module.css'
 
 const SingleAd: FC<{ ad: AdType }> = ({ ad }) => {

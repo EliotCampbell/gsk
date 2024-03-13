@@ -1,11 +1,11 @@
 'use client'
 
 import React, { FC } from 'react'
-import { ObjectType } from '@/modules/userPanel/types'
 import classes from './SingleObject.module.css'
 import { LuParkingSquare } from 'react-icons/lu'
 import { MdOutlineGarage } from 'react-icons/md'
 import Link from 'next/link'
+import { ObjectType } from '@/modules/UserPanel/types'
 
 const SingleObject: FC<{ object: ObjectType }> = ({ object }) => {
   return (

@@ -1,22 +1,22 @@
 'use client'
 import React, { FC } from 'react'
-import { ObjectType } from '@/modules/userPanel/types'
 import SingleObject from '@/modules/userPersonalDetails/components/SingleObject/SingleObject'
 import classes from './UserObjectsPanel.module.css'
-import { STATUS } from '@/types/statusTypes'
-import { usePromise } from '@/hooks/usePromise'
-import { useInit } from '@/hooks/useInit'
+import { ObjectType } from '@/modules/UserPanel/types'
+import Spinner from '@/modules/UI/Spinner/Spinner'
+import { useLayoutInit } from '@/hooks/useLayoutInit'
 
 const UserObjectsPanel: FC<{
   objects: ObjectType[]
-  status: STATUS
+  pending: boolean
   getData: () => {}
-}> = ({ objects, status, getData }) => {
-  useInit(getData)
-  usePromise(status === STATUS.pending).then()
+}> = ({ objects, pending, getData }) => {
+  useLayoutInit(getData)
 
-  return objects.length > 0 ? (
-    <div className={classes.UserObjectsPanel}>
+  return pending ? (
+    <Spinner />
+  ) : objects.length > 0 ? (
+    <div className={classes.UserObjectsContainer}>
       {objects.map((object) => (
         <SingleObject key={object.id} object={object} />
       ))}

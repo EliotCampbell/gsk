@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import classes from './UserInfo.module.css'
-import { UserInfoType } from '@/modules/userPanel/types'
+import { UserInfoType } from '@/modules/userPersonalDetails/types'
 import Image from 'next/image'
 import Spinner from '@/modules/UI/Spinner/Spinner'
 

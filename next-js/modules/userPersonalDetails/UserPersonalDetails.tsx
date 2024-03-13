@@ -1,11 +1,11 @@
 'use client'
-import React, { FC, Suspense } from 'react'
-import UserInfo from '@/modules/userPanel/components/UserInfo/UserInfo'
+import React, { FC } from 'react'
+import UserInfo from '@/modules/userPersonalDetails/components/UserInfo/UserInfo'
 import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
-import { userPrivateDataSelector } from '@/modules/userPanel/selectors'
-import Spinner from '@/modules/UI/Spinner/Spinner'
+import { userPrivateDataSelector } from '@/modules/userPersonalDetails/selectors'
 import { useInit } from '@/hooks/useInit'
 import { getPublicUser } from '@/clientServices/redux/features/userProfile/userProfileSlice'
+import { STATUS } from '@/types/statusTypes'
 
 const UserPersonalDetails: FC = () => {
   const dispatch = useAppDispatch()
@@ -15,9 +15,13 @@ const UserPersonalDetails: FC = () => {
   const userData = useAppSelector(userPrivateDataSelector)
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <UserInfo userInfo={userData} />
-    </Suspense>
+    <UserInfo
+      userInfo={userData}
+      pending={
+        userData.userPrivateInfo.status === STATUS.pending ||
+        userData.userPublicInfo.status === STATUS.pending
+      }
+    />
   )
 }
 

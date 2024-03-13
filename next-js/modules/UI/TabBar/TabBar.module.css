@@ -2,13 +2,13 @@
   width: 100%;
   height: 60px;
   display: flex;
-  background: var(--background);
+  background: var(--background-color);
 }
 
 .singleTab {
   height: 100%;
   border-bottom: 5px solid var(--border-color);
-  color: var(--font-secondary-color);
+  color: var(--font-garage-color);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -25,10 +25,10 @@
 }
 
 .singleTab:active {
-  background: var(--background);
+  background: var(--background-color);
   transition: none;
 }
 
 .singleTab_selected {
-  border-bottom: 5px solid var(--font-secondary-color);
+  border-bottom: 5px solid var(--font-garage-color);
 }

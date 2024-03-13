@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import UserPersonalDetails from '@/modules/userPanel/UserPersonalDetails'
-import UserPanel from '@/modules/userPersonalDetails/UserPanel'
+import UserPersonalDetails from '@/modules/userPersonalDetails/UserPersonalDetails'
+import UserPanel from '@/modules/UserPanel/UserPanel'
 
 const Page: FC = () => {
   return (

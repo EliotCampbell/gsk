@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { ServiceType } from '@/modules/userPersonalDetails/types'
+import { ServiceType } from '../../types'
 import classes from './AlreadyMaser.module.css'
 import { FiTrash } from 'react-icons/fi'
 
