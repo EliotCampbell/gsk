@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import Header from '@/modules/mainLayout/components/Header/Header'
-import Footer from '@/modules/mainLayout/components/Footer/Footer'
-import LayoutBody from '@/modules/mainLayout/components/LayoutBody/LayoutBody'
+import Header from '@/app/layouts/MainLayout/components/Header/Header'
+import Footer from '@/app/layouts/MainLayout/components/Footer/Footer'
+import LayoutBody from '@/app/layouts/MainLayout/components/LayoutBody/LayoutBody'
 import {
   FiAlertTriangle,
   FiAlignCenter,
@@ -9,6 +9,7 @@ import {
   FiPhoneCall,
   FiTool
 } from 'react-icons/fi'
+import UserSection from '@/app/layouts/MainLayout/clientSide/UserSection'
 
 const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   type TMenuItem = {
@@ -53,9 +54,11 @@ const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <>
-      <Header menuItems={menuItems} title={'ГСК'} />
+      <Header menuItems={menuItems} title={'ГСК'}>
+        <UserSection />
+      </Header>
       <LayoutBody>{children}</LayoutBody>
-      <Footer />
+      <Footer title={'ГСК'} />
     </>
   )
 }

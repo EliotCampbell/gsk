@@ -1,0 +1,9 @@
+.logo {
+  font-size: 38px;
+  font-weight: 700;
+  display: flex;
+  color: var(--font-garage-color);
+  border-radius: 5px;
+  align-items: center;
+  min-height: 100%;
+}

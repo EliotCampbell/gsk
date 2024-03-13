@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import React, { ReactNode } from 'react'
-import MainLayout from '@/modules/mainLayout/MainLayout'
+import MainLayout from '@/app/layouts/MainLayout/MainLayout'
 import ReduxProvider from '@/app/ReduxProvider'
 import ClientServicesProvider from '@/app/ClientServicesProvider'
 
