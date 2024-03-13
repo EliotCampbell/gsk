@@ -1,0 +1,15 @@
+.imagePlaceholder {
+  min-height: 100%;
+  min-width: 100%;
+  background: var(--background-grey-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.letter {
+  color: var(--font-grey-color);
+  user-select: none;
+  font-weight: bold;
+}
