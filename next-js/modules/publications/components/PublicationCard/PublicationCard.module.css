@@ -22,18 +22,13 @@
 
 .title {
   font-size: 20px;
-  padding: 30px 0 10px 10px;
+  margin: 30px 0 10px 10px;
   font-weight: 700;
 }
 
 .title:hover {
   text-decoration: underline;
   cursor: pointer;
-}
-
-.body {
-  padding: 10px 0 10px 10px;
-  font-size: 16px;
 }
 
 .body {
@@ -72,10 +67,12 @@
 }
 
 .originPicture {
+  overflow: hidden;
+  position: relative;
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background: var(--font-grey-color);
+  font-size: 20px;
 }
 
 .author {
@@ -92,4 +89,8 @@
   font-size: 14px;
   color: var(--font-grey-color);
   margin-left: auto;
+}
+
+.profileImg {
+  object-fit: cover;
 }

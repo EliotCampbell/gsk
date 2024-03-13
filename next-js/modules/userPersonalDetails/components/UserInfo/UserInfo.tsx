@@ -4,6 +4,7 @@ import classes from './UserInfo.module.css'
 import { UserInfoType } from '@/modules/userPersonalDetails/types'
 import Image from 'next/image'
 import Spinner from '@/modules/UI/Spinner/Spinner'
+import ImagePlaceholder from '@/modules/UI/ImagePlaceholder/ImagePlaceholder'
 
 const UserInfo: React.FC<{ userInfo: UserInfoType; pending: boolean }> = ({
   userInfo: { userPublicInfo, userPrivateInfo },
@@ -15,22 +16,20 @@ const UserInfo: React.FC<{ userInfo: UserInfoType; pending: boolean }> = ({
         <Spinner />
       ) : (
         <div className={classes.profileInfo}>
-          {userPublicInfo.data.img ? (
-            <div className={classes.imgContainer}>
+          <div className={classes.imgContainer}>
+            {userPublicInfo.data.img ? (
               <Image
                 src={'https://' + userPublicInfo.data.img}
                 alt={`Фото профиля ${userPublicInfo.data.username}`}
                 fill
                 priority={false}
               />
-            </div>
-          ) : (
-            <div className={classes.img}>
-              <h1>
-                {userPublicInfo.data.name[0] || userPublicInfo.data.username[0]}
-              </h1>
-            </div>
-          )}
+            ) : (
+              <ImagePlaceholder
+                str={userPublicInfo.data.name || userPublicInfo.data.username}
+              />
+            )}
+          </div>
           <div className={classes.infoContainer}>
             <p className={classes.greeting}>{`Привет, ${
               userPublicInfo.data.name || userPublicInfo.data.name
