@@ -1,8 +1,8 @@
 'use client'
 import React, { FC } from 'react'
-import SingleAd from '@/modules/userPersonalDetails/components/SingleAd/SingleAd'
+import SingleAd from '@/modules/userPanel/components/SingleAd/SingleAd'
 import classes from './UserAdsPanel.module.css'
-import { AdType } from '@/modules/UserPanel/types'
+import { AdType } from '@/modules/userPanel/types'
 import { useLayoutInit } from '@/hooks/useLayoutInit'
 import Spinner from '@/modules/UI/Spinner/Spinner'
 

@@ -1,4 +1,5 @@
 import { createSupabaseSClient as supabase } from '@/serverServices/supabase/clientCreators'
+import { AsyncReturnType } from '@/types/typesUtils'
 
 export const getPublications = async () => {
   try {
@@ -22,3 +23,5 @@ export const getPublications = async () => {
     return []
   }
 }
+
+export type IPublications = AsyncReturnType<typeof getPublications>

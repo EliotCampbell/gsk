@@ -6,8 +6,8 @@ import { getMyObjects } from '@/clientServices/redux/features/objects/objectsSli
 import { useAppDispatch, useAppSelector } from '@/clientServices/redux/hooks'
 import { useSearchParams } from 'next/navigation'
 import TabBarBody from '@/modules/UI/TabBarBody/TabBarBody'
-import UserAdsPanel from '@/modules/userPersonalDetails/components/UserAdsPanel/UserAdsPanel'
-import UserObjectsPanel from '@/modules/userPersonalDetails/components/UserObjectsPanel/UserObjectsPanel'
+import UserAdsPanel from '@/modules/userPanel/components/UserAdsPanel/UserAdsPanel'
+import UserObjectsPanel from '@/modules/userPanel/components/UserObjectsPanel/UserObjectsPanel'
 import { getAdsByUser } from '@/clientServices/redux/features/ads/adsSlice'
 import { useQueryCreator } from '@/hooks/useQueryCreator'
 import {
@@ -18,8 +18,8 @@ import {
   myAdsSelector,
   myObjectsSelector,
   myServicesSelector
-} from '@/modules/UserPanel/selectors'
-import IAmMaster from '@/modules/userPersonalDetails/components/IAmMaster/IAmMaster'
+} from '@/modules/userPanel/selectors'
+import IAmMaster from '@/modules/userPanel/components/IAmMaster/IAmMaster'
 import { STATUS } from '@/types/statusTypes'
 
 const UserPanel: FC = () => {

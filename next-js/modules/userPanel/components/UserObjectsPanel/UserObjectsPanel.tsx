@@ -1,8 +1,8 @@
 'use client'
 import React, { FC } from 'react'
-import SingleObject from '@/modules/userPersonalDetails/components/SingleObject/SingleObject'
+import SingleObject from '@/modules/userPanel/components/SingleObject/SingleObject'
 import classes from './UserObjectsPanel.module.css'
-import { ObjectType } from '@/modules/UserPanel/types'
+import { ObjectType } from '@/modules/userPanel/types'
 import Spinner from '@/modules/UI/Spinner/Spinner'
 import { useLayoutInit } from '@/hooks/useLayoutInit'
 

@@ -16,11 +16,14 @@ const UserInfo: React.FC<{ userInfo: UserInfoType; pending: boolean }> = ({
       ) : (
         <div className={classes.profileInfo}>
           {userPublicInfo.data.img ? (
-            <Image
-              src={userPublicInfo.data.img}
-              alt={'User profile photo'}
-              className={classes.img}
-            />
+            <div className={classes.imgContainer}>
+              <Image
+                src={'https://' + userPublicInfo.data.img}
+                alt={`Фото профиля ${userPublicInfo.data.username}`}
+                fill
+                priority={false}
+              />
+            </div>
           ) : (
             <div className={classes.img}>
               <h1>

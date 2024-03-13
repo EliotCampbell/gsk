@@ -1,8 +1,8 @@
 'use client'
 import React, { FC } from 'react'
-import { ServiceType } from '@/modules/UserPanel/types'
-import BecomeMaster from '@/modules/userPersonalDetails/components/BecomeMaster/BecomeMaster'
-import AlreadyMaster from '@/modules/userPersonalDetails/components/AlreadyMaster/AlreadyMaster'
+import { ServiceType } from '@/modules/userPanel/types'
+import BecomeMaster from '@/modules/userPanel/components/BecomeMaster/BecomeMaster'
+import AlreadyMaster from '@/modules/userPanel/components/AlreadyMaster/AlreadyMaster'
 import { useLayoutInit } from '@/hooks/useLayoutInit'
 import Spinner from '@/modules/UI/Spinner/Spinner'
 
