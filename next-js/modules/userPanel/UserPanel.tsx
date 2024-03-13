@@ -60,17 +60,14 @@ const UserPanel: FC = () => {
           services={servicesData.myServices}
           pending={servicesData.myServicesStatus === STATUS.pending}
           getData={() => dispatch(getServicesByUser())}
-          deleteService={(id: string) =>
-            dispatch(deleteServiceById(id)).then((data) => {
-              console.log(data)
-            })
-          }
+          deleteService={(id: string) => dispatch(deleteServiceById(id))}
         />
       )
     }
   ]
 
-  const selectedTab = useSearchParams().get('selected_tab') || ''
+  const selectedTab =
+    useSearchParams().get('selected_tab') || userOptions[0].optionType
 
   return (
     <>

@@ -3,7 +3,6 @@ import {
   IGetServicesByUser,
   ServicesSAType
 } from '@/serverServices/supabase/exports'
-import { adsSlice } from '@/clientServices/redux/features/ads/adsSlice'
 import {
   setError,
   setInfo
@@ -117,6 +116,6 @@ const servicesSlice = createSlice({
   }
 })
 
-export const {} = adsSlice.actions
+export const {} = servicesSlice.actions
 
 export default servicesSlice.reducer
