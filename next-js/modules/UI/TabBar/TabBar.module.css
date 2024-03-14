@@ -7,7 +7,7 @@
 
 .singleTab {
   height: 100%;
-  border-bottom: 5px solid var(--border-color);
+  border-bottom: 5px var(--border-color) solid;
   color: var(--font-garage-color);
   font-weight: 700;
   display: flex;

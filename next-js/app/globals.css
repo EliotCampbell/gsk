@@ -18,7 +18,8 @@
   --font-grey-color: #ababab;
   --font-garage-color: #9a270f;
   --font-garage-color_hover: #791808;
-  --border-color: rgba(141, 141, 141, 0.3);
+  --border-color: rgb(222, 222, 222);
+  --border-style: var(--border-color) solid 1px;
   --border-garage-color: #9a270f;
   --box-shadow-color: rgba(164, 112, 103, 0.3);
   --error-color: #ff0000;
@@ -39,7 +40,7 @@ body {
 }
 
 body {
-  color: var(--font-color);
+  color: var(--font-garage-color);
   background: var(--background-grey-color);
   display: flex;
   flex-direction: column;
