@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import Header from '@/app/layouts/MainLayout/components/Header/Header'
-import Footer from '@/app/layouts/MainLayout/components/Footer/Footer'
-import LayoutBody from '@/app/layouts/MainLayout/components/LayoutBody/LayoutBody'
+import Header from '@/layouts/mainLayout/components/Header/Header'
+import Footer from '@/layouts/mainLayout/components/Footer/Footer'
+import LayoutBody from '@/layouts/mainLayout/components/LayoutBody/LayoutBody'
 import {
   FiAlertTriangle,
   FiAlignCenter,
@@ -9,7 +9,7 @@ import {
   FiPhoneCall,
   FiTool
 } from 'react-icons/fi'
-import UserSection from '@/app/layouts/MainLayout/clientSide/UserSection'
+import UserSection from '@/layouts/mainLayout/clientSide/UserSection'
 
 const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   type TMenuItem = {

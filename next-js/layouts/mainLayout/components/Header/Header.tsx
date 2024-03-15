@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import classes from './Header.module.css'
 import Link from 'next/link'
-import Logo from '@/app/layouts/MainLayout/components/Logo/Logo'
+import Logo from '@/layouts/mainLayout/components/Logo/Logo'
 
 type MenuItemType = {
   type: string

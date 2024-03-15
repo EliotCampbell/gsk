@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import classes from './Footer.module.css'
-import Logo from '@/app/layouts/MainLayout/components/Logo/Logo'
+import Logo from '@/layouts/mainLayout/components/Logo/Logo'
 const Footer: FC<{ title: string }> = ({ title }) => {
   return (
     <div className={classes.footerWrapper}>

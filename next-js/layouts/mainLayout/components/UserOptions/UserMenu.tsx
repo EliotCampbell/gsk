@@ -1,7 +1,6 @@
 'use client'
 import React, { FC } from 'react'
 import classes from './UserOptions.module.css'
-import LoginButton from '@/modules/UI/LoginButton/LoginButton'
 import Link from 'next/link'
 
 const UserMenu: FC<{ sigOutHandler: () => {} }> = ({ sigOutHandler }) => {
