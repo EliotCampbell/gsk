@@ -81,4 +81,5 @@ h4,
 h5,
 h6 {
   color: var(--font-garage-color);
+  letter-spacing: 0.05em;
 }
