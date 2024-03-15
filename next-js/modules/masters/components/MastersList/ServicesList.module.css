@@ -1,0 +1,11 @@
+.servicesList {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.countOfMasters {
+  color: var(--font-grey-color);
+}
