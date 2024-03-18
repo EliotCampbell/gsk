@@ -16,6 +16,7 @@
   max-width: 100%;
   resize: none;
   line-height: 1.5em;
+  transition: 300ms;
 }
 
 .textArea:focus {
